@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Workout">
+    <title>Daily Workout Tracker</title>
+    <style>
+        :root {
+            --color-bg-primary: #fcfcf9;
+            --color-surface: #fffffd;
+            --color-text: #13343b;
+            --color-text-secondary: #626c71;
+            --color-primary: #21808d;
+            --color-primary-hover: #1d7480;
+            --color-border: rgba(94, 82, 64, 0.2);
+            --color-card-border: rgba(94, 82, 64, 0.12);
+            --color-success: #21808d;
+            --color-bg-1: rgba(59, 130, 246, 0.08);
+            --color-bg-2: rgba(245, 158, 11, 0.08);
+            --color-bg-3: rgba(34, 197, 94, 0.08);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-bg-primary: #1f2121;
+                --color-surface: #262828;
+                --color-text: #f5f5f5;
+                --color-text-secondary: rgba(167, 169, 169, 0.7);
+                --color-primary: #32b8c6;
+                --color-primary-hover: #2da6b2;
+                --color-border: rgba(119, 124, 124, 0.3);
+                --color-card-border: rgba(119, 124, 124, 0.2);
+                --color-success: #32b8c6;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--color-bg-primary);
+            color: var(--color-text);
+            line-height: 1.6;
+            padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 16px) env(safe-area-inset-bottom, 16px) env(safe-area-inset-left, 16px);
+            padding-top: max(16px, env(safe-area-inset-top));
+            padding-bottom: max(16px, env(safe-area-inset-bottom));
+            max-width: 100%;
+            margin: 0;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 16px;
+            padding: 20px 16px;
+            background: var(--color-surface);
+            border-radius: 16px;
+            border: 1px solid var(--color-card-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            font-size: 26px;
+            margin-bottom: 8px;
+            color: var(--color-text);
+            font-weight: 700;
+        }
+
+        .date-display {
+            font-size: 15px;
+            color: var(--color-text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .week-info {
+            display: inline-block;
+            padding: 8px 16px;
+            background: var(--color-bg-1);
+            border-radius: 24px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--color-primary);
+        }
+
+        .workout-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-card-border);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .workout-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--color-text);
+        }
+
+        .workout-subtitle {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .exercise {
+            padding: 16px;
+            margin-bottom: 12px;
+            background: var(--color-bg-primary);
+            border-radius: 12px;
+            border-left: 4px solid var(--color-primary);
+            min-height: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .exercise-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--color-text);
+            line-height: 1.4;
+        }
+
+        .exercise-details {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .exercise-sets {
+            font-weight: 600;
+            color: var(--color-primary);
+            font-size: 15px;
+        }
+
+        .exercise-notes {
+            font-size: 13px;
+            color: var(--color-text-secondary);
+            font-style: italic;
+            margin-top: 6px;
+            line-height: 1.5;
+        }
+
+        .rest-day {
+            text-align: center;
+            padding: 48px 20px;
+            background: var(--color-bg-3);
+            border-radius: 16px;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .rest-day h2 {
+            font-size: 32px;
+            margin-bottom: 12px;
+            color: var(--color-success);
+            font-weight: 700;
+        }
+
+        .rest-day p {
+            font-size: 16px;
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+        }
+
+        .warm-up-section {
+            background: var(--color-bg-2);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        .warm-up-title {
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--color-text);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .warm-up-item {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+            line-height: 1.5;
+        }
+
+        .warm-up-item:before {
+            content: "•";
+            position: absolute;
+            left: 8px;
+            color: var(--color-primary);
+            font-weight: bold;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 16px 20px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            background: var(--color-primary);
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(33, 128, 141, 0.2);
+            -webkit-appearance: none;
+            appearance: none;
+            touch-action: manipulation;
+            min-height: 50px;
+        }
+
+        .btn:active {
+            transform: scale(0.97);
+            background: var(--color-primary-hover);
+            box-shadow: 0 1px 4px rgba(33, 128, 141, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--color-surface);
+            color: var(--color-primary);
+            border: 2px solid var(--color-primary);
+            box-shadow: none;
+        }
+
+        .btn-secondary:active {
+            background: var(--color-bg-1);
+        }
+
+        .progress-info {
+            margin-top: 20px;
+            padding: 16px;
+            background: var(--color-bg-1);
+            border-radius: 12px;
+            border-left: 4px solid var(--color-primary);
+        }
+
+        .progress-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--color-text);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .progress-text {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Smooth scrolling for iOS */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Prevent zoom on input focus */
+        input, select, textarea {
+            font-size: 16px;
+        }
+
+        /* Loading animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .workout-card, .rest-day {
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* Better touch feedback */
+        .btn:focus {
+            outline: none;
+        }
+
+        /* Ensure content doesn't get cut off on notched iPhones */
+        @supports (padding: max(0px)) {
+            body {
+                padding-left: max(16px, env(safe-area-inset-left));
+                padding-right: max(16px, env(safe-area-inset-right));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>💪 Daily Workout</h1>
+        <div class="date-display" id="dateDisplay"></div>
+        <div class="week-info" id="weekInfo"></div>
+    </div>
+
+    <div class="controls">
+        <button class="btn" onclick="changeDay(-1)">← Previous</button>
+        <button class="btn btn-secondary" onclick="goToToday()">Today</button>
+        <button class="btn" onclick="changeDay(1)">Next →</button>
+    </div>
+
+    <div id="workoutContainer"></div>
+
+    <script>
+        const programStart = new Date('2024-12-16');
+        let currentDate = new Date();
+
+        const workoutProgram = {
+            monday: {
+                title: "Lower Body Strength",
+                subtitle: "Deadlift Focus",
+                warmup: ["5 min light bike/jog", "Hip + ankle mobility (2-3 min)", "Glute activation: band walks 2×15"],
+                blocks: {
+                    1: [
+                        { name: "Deadlift", sets: "3×5", notes: "" },
+                        { name: "Overhead Press", sets: "3×6-8", notes: "" },
+                        { name: "Hip Thrust", sets: "3×8", notes: "" },
+                        { name: "Lat Pulldown or Seated Row", sets: "3×10", notes: "" },
+                        { name: "Rear Delt Fly", sets: "2×12-15", notes: "" },
+                        { name: "Hanging Knee Raise", sets: "2-3×10-15", notes: "" }
+                    ],
+                    2: [
+                        { name: "Deadlift", sets: "1×3-4 heavy + 2×5-6", notes: "Heavy set first" },
+                        { name: "Hip Thrust", sets: "3×6-8", notes: "" },
+                        { name: "Front Squat", sets: "3×6", notes: "" },
+                        { name: "Seated Row or Lat Pulldown", sets: "3×10", notes: "" },
+                        { name: "Rear Delt Fly", sets: "2×12-15", notes: "" }
+                    ],
+                    3: [
+                        { name: "Deadlift", sets: "1×1-2 @ 85-90% + 2×4", notes: "Peak strength" },
+                        { name: "Hip Thrust", sets: "2×5", notes: "" },
+                        { name: "Front Squat", sets: "2×6", notes: "" },
+                        { name: "Hamstring Curl or Back Extension", sets: "2×10", notes: "" },
+                        { name: "Light Core", sets: "1-2 sets", notes: "Your choice" }
+                    ]
+                }
+            },
+            tuesday: {
+                title: "Short Easy Run",
+                subtitle: "Recovery & Maintenance",
+                exercises: [
+                    { name: "Easy Run", sets: "3-6 km", notes: "Zone 2 pace - should be able to hold conversation" },
+                    { name: "Optional: Strides", sets: "4-6×100m", notes: "Relaxed, fast, full rest between" }
+                ],
+                cooldown: ["Stretch 6-10 min", "Focus: calf, quad, hamstrings, glutes, hip flexor"]
+            },
+            wednesday: {
+                title: "Upper Body Strength + Arms",
+                subtitle: "Bench Press Focus",
+                warmup: ["5 min light bike/jog", "Band pull-aparts 2×12", "Light shoulder mobility"],
+                blocks: {
+                    1: [
+                        { name: "Bench Press", sets: "4×6-8", notes: "" },
+                        { name: "Pull-Up", sets: "4×6-10", notes: "" },
+                        { name: "Incline Dumbbell Press", sets: "3×8-10", notes: "" },
+                        { name: "Barbell Row", sets: "3×8", notes: "" },
+                        { name: "Lateral Raise", sets: "3×12-15", notes: "" },
+                        { name: "Superset: Triceps Pushdown + Dumbbell Curl", sets: "2×12-15", notes: "Minimal rest between exercises" },
+                        { name: "Finisher: Rope Pushdown + Hammer Curl", sets: "2×15-20", notes: "60s rest - pump sets" }
+                    ],
+                    2: [
+                        { name: "Bench Press", sets: "1×3-4 heavy + 3×5-6", notes: "Heavy set first" },
+                        { name: "Weighted Pull-Up", sets: "4×5-8", notes: "Add weight if possible" },
+                        { name: "Incline Dumbbell Press", sets: "3×8-10", notes: "" },
+                        { name: "Barbell Row", sets: "3×6-8", notes: "" },
+                        { name: "Face Pulls", sets: "3×12-15", notes: "" },
+                        { name: "Superset: Skull Crushers + Dumbbell Curl", sets: "3×10-12", notes: "" },
+                        { name: "Finisher: Rope Pushdown + Hammer Curl", sets: "2-3×15-20", notes: "" }
+                    ],
+                    3: [
+                        { name: "Bench Press", sets: "1×1-2 @ 85-90% + 3×4", notes: "Peak strength" },
+                        { name: "Pull-Up", sets: "3×5-8", notes: "" },
+                        { name: "Overhead Press", sets: "3×5", notes: "" },
+                        { name: "Dumbbell Row", sets: "2×10/side", notes: "" },
+                        { name: "Triceps Extension", sets: "2×12", notes: "" },
+                        { name: "Biceps Curl", sets: "2×12", notes: "" },
+                        { name: "Finisher: Rope Pushdown + Hammer Curl", sets: "2×15-20", notes: "Lighter, pump sets" }
+                    ]
+                }
+            },
+            thursday: {
+                title: "Long Easy Run",
+                subtitle: "Aerobic Base Building",
+                exercises: [
+                    { name: "Easy Run", sets: "8-12 km", notes: "Zone 2 pace - conversational" },
+                    { name: "Optional: Moderate Finish", sets: "Last 10-15 min", notes: "Every other week - slightly faster pace" }
+                ],
+                cooldown: ["Stretch 6-10 min", "Focus: calf, quad, hamstrings, glutes, hip flexor"]
+            },
+            friday: {
+                title: "Lower Body Strength",
+                subtitle: "Squat Focus",
+                warmup: ["5 min light bike/jog", "Hip + ankle mobility (2-3 min)", "Glute activation: band walks 2×15"],
+                blocks: {
+                    1: [
+                        { name: "Back Squat", sets: "4×6-8", notes: "" },
+                        { name: "Romanian Deadlift", sets: "3×8", notes: "" },
+                        { name: "Leg Press or Hack Squat", sets: "3×10", notes: "" },
+                        { name: "Split Squat", sets: "3×8/leg", notes: "" },
+                        { name: "Calf Raises", sets: "3×12-15", notes: "" },
+                        { name: "Plank", sets: "3×30-60 sec", notes: "" }
+                    ],
+                    2: [
+                        { name: "Back Squat", sets: "1×4 heavy + 3×6 lighter", notes: "Heavy set first, then reduce weight" },
+                        { name: "Romanian Deadlift", sets: "3×6-8", notes: "" },
+                        { name: "Bulgarian Split Squat", sets: "3×8", notes: "" },
+                        { name: "Calf Raises", sets: "4×10-12", notes: "" },
+                        { name: "Cable Crunch", sets: "3×12-15", notes: "" }
+                    ],
+                    3: [
+                        { name: "Back Squat", sets: "1×1-2 @ 85-90% + 3×4 @ 75-80%", notes: "Peak strength - max effort on heavy single/double" },
+                        { name: "Romanian Deadlift", sets: "3×5", notes: "" },
+                        { name: "Lunges", sets: "2×10/leg", notes: "" },
+                        { name: "Calf Raises", sets: "2×12", notes: "" },
+                        { name: "Heavy Cable Crunch", sets: "2×12", notes: "" }
+                    ]
+                }
+            },
+            saturday: { title: "Rest Day", subtitle: "Recovery" },
+            sunday: { title: "Rest Day", subtitle: "Recovery" }
+        };
+
+        function calculateWeekNumber(date) {
+            const diffTime = date - programStart;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            const weekNum = Math.ceil(diffDays / 7);
+            return Math.max(1, Math.min(12, weekNum));
+        }
+
+        function getBlock(weekNum) {
+            if (weekNum <= 4) return 1;
+            if (weekNum <= 8) return 2;
+            return 3;
+        }
+
+        function getDayName(date) {
+            const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+            return days[date.getDay()];
+        }
+
+        function formatDate(date) {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            return date.toLocaleDateString('en-US', options);
+        }
+
+        function renderWorkout() {
+            const dayName = getDayName(currentDate);
+            const weekNum = calculateWeekNumber(currentDate);
+            const block = getBlock(weekNum);
+            const workout = workoutProgram[dayName];
+
+            document.getElementById('dateDisplay').textContent = formatDate(currentDate);
+            document.getElementById('weekInfo').textContent = `Week ${weekNum} • Block ${block}`;
+
+            const container = document.getElementById('workoutContainer');
+
+            if (!workout || workout.title === "Rest Day") {
+                container.innerHTML = `<div class="rest-day"><h2>🛋️ Rest Day</h2><p>Recovery is when you get stronger.<br>Enjoy your day off!</p></div>`;
+                return;
+            }
+
+            let html = `<div class="workout-card"><div class="workout-title">${workout.title}</div><div class="workout-subtitle">${workout.subtitle}</div>`;
+
+            if (workout.warmup) {
+                html += `<div class="warm-up-section"><div class="warm-up-title">🔥 Warm-up</div>`;
+                workout.warmup.forEach(item => {
+                    html += `<div class="warm-up-item">${item}</div>`;
+                });
+                html += `</div>`;
+            }
+
+            if (workout.blocks) {
+                const exercises = workout.blocks[block];
+                exercises.forEach(ex => {
+                    html += `<div class="exercise"><div class="exercise-name">${ex.name}</div><div class="exercise-details"><span class="exercise-sets">${ex.sets}</span></div>${ex.notes ? `<div class="exercise-notes">${ex.notes}</div>` : ''}</div>`;
+                });
+            } else if (workout.exercises) {
+                workout.exercises.forEach(ex => {
+                    html += `<div class="exercise"><div class="exercise-name">${ex.name}</div><div class="exercise-details"><span class="exercise-sets">${ex.sets}</span></div>${ex.notes ? `<div class="exercise-notes">${ex.notes}</div>` : ''}</div>`;
+                });
+            }
+
+            if (workout.cooldown) {
+                html += `<div class="warm-up-section" style="margin-top: 12px;"><div class="warm-up-title">🧊 Cool-down</div>`;
+                workout.cooldown.forEach(item => {
+                    html += `<div class="warm-up-item">${item}</div>`;
+                });
+                html += `</div>`;
+            }
+
+            html += `<div class="progress-info"><div class="progress-title">💡 Progression Rule</div><div class="progress-text">If you hit the top of the rep range for all sets with good form → Increase weight next week (usually +5 lb). Never train compounds to failure!</div></div></div>`;
+
+            container.innerHTML = html;
+        }
+
+        function changeDay(offset) {
+            currentDate.setDate(currentDate.getDate() + offset);
+            renderWorkout();
+        }
+
+        function goToToday() {
+            currentDate = new Date();
+            renderWorkout();
+        }
+
+        // Prevent rubber-band scrolling on iOS
+        document.addEventListener('touchmove', function(e) {
+            if (e.touches.length > 1) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        renderWorkout();
+    </script>
+</body>
+</html>
