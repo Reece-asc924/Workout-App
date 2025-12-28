@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="Workout">
-    <title>Daily Workout Tracker</title>
+    <meta name="apple-mobile-web-app-title" content="Marathon Training">
+    <title>16-Week Hybrid Training Programme</title>
     <style>
         :root {
             --color-bg-primary: #fcfcf9;
@@ -18,9 +18,9 @@
             --color-border: rgba(94, 82, 64, 0.2);
             --color-card-border: rgba(94, 82, 64, 0.12);
             --color-success: #21808d;
-            --color-bg-1: rgba(59, 130, 246, 0.08);
-            --color-bg-2: rgba(245, 158, 11, 0.08);
-            --color-bg-3: rgba(34, 197, 94, 0.08);
+            --color-run: rgba(59, 130, 246, 0.08);
+            --color-lift: rgba(245, 158, 11, 0.08);
+            --color-rest: rgba(34, 197, 94, 0.08);
         }
 
         @media (prefers-color-scheme: dark) {
@@ -73,10 +73,16 @@
         }
 
         .header h1 {
-            font-size: 26px;
+            font-size: 24px;
             margin-bottom: 8px;
             color: var(--color-text);
             font-weight: 700;
+        }
+
+        .header-subtitle {
+            font-size: 13px;
+            color: var(--color-text-secondary);
+            margin-bottom: 12px;
         }
 
         .date-display {
@@ -88,11 +94,22 @@
         .week-info {
             display: inline-block;
             padding: 8px 16px;
-            background: var(--color-bg-1);
+            background: var(--color-run);
             border-radius: 24px;
             font-size: 14px;
             font-weight: 600;
             color: var(--color-primary);
+        }
+
+        .phase-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--color-lift);
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-left: 8px;
         }
 
         .workout-card {
@@ -162,7 +179,7 @@
         .rest-day {
             text-align: center;
             padding: 48px 20px;
-            background: var(--color-bg-3);
+            background: var(--color-rest);
             border-radius: 16px;
             min-height: 300px;
             display: flex;
@@ -185,7 +202,7 @@
         }
 
         .warm-up-section {
-            background: var(--color-bg-2);
+            background: var(--color-lift);
             border-radius: 12px;
             padding: 16px;
             margin-bottom: 20px;
@@ -255,18 +272,18 @@
         }
 
         .btn-secondary:active {
-            background: var(--color-bg-1);
+            background: var(--color-run);
         }
 
-        .progress-info {
+        .pace-info {
             margin-top: 20px;
             padding: 16px;
-            background: var(--color-bg-1);
+            background: var(--color-run);
             border-radius: 12px;
             border-left: 4px solid var(--color-primary);
         }
 
-        .progress-title {
+        .pace-title {
             font-size: 13px;
             font-weight: 700;
             color: var(--color-text);
@@ -275,23 +292,16 @@
             letter-spacing: 0.5px;
         }
 
-        .progress-text {
+        .pace-text {
             font-size: 14px;
             color: var(--color-text-secondary);
             line-height: 1.6;
         }
 
-        /* Smooth scrolling for iOS */
         html {
             scroll-behavior: smooth;
         }
 
-        /* Prevent zoom on input focus */
-        input, select, textarea {
-            font-size: 16px;
-        }
-
-        /* Loading animation */
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -307,25 +317,20 @@
             animation: fadeIn 0.3s ease;
         }
 
-        /* Better touch feedback */
         .btn:focus {
             outline: none;
-        }
-
-        /* Ensure content doesn't get cut off on notched iPhones */
-        @supports (padding: max(0px)) {
-            body {
-                padding-left: max(16px, env(safe-area-inset-left));
-                padding-right: max(16px, env(safe-area-inset-right));
-            }
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>💪 Daily Workout</h1>
+        <h1>🏃‍♂️💪 Hybrid Training</h1>
+        <div class="header-subtitle">Upper Body Hypertrophy + Sub-3:30 Marathon</div>
         <div class="date-display" id="dateDisplay"></div>
-        <div class="week-info" id="weekInfo"></div>
+        <div>
+            <span class="week-info" id="weekInfo"></span>
+            <span class="phase-badge" id="phaseInfo"></span>
+        </div>
     </div>
 
     <div class="controls">
@@ -337,135 +342,248 @@
     <div id="workoutContainer"></div>
 
     <script>
-        const programStart = new Date('2025-11-29');
+        const programStart = new Date('2025-12-28'); // Week 1 starts tomorrow
         let currentDate = new Date();
 
         const workoutProgram = {
+            // WEEKS 1-8: BASE BUILDING (3 runs/week)
+            phases: {
+                1: { name: "Base Building", weeks: [1,2,3,4,5,6,7,8], runs: 3 },
+                2: { name: "Transition", weeks: [9,10,11,12], runs: 4 },
+                3: { name: "Peak & Taper", weeks: [13,14,15,16], runs: 4 }
+            },
+            
             monday: {
-                title: "Lower Body Strength",
-                subtitle: "Deadlift Focus",
-                warmup: ["5 min light bike/jog", "Hip + ankle mobility (2-3 min)", "Glute activation: band walks 2×15"],
-                blocks: {
-                    1: [
-                        { name: "Deadlift", sets: "3×5", notes: "" },
-                        { name: "Overhead Press", sets: "3×6-8", notes: "" },
-                        { name: "Hip Thrust", sets: "3×8", notes: "" },
-                        { name: "Lat Pulldown or Seated Row", sets: "3×10", notes: "" },
-                        { name: "Rear Delt Fly", sets: "2×12-15", notes: "" },
-                        { name: "Hanging Knee Raise", sets: "2-3×10-15", notes: "" }
-                    ],
-                    2: [
-                        { name: "Deadlift", sets: "1×3-4 heavy + 2×5-6", notes: "Heavy set first" },
-                        { name: "Hip Thrust", sets: "3×6-8", notes: "" },
-                        { name: "Front Squat", sets: "3×6", notes: "" },
-                        { name: "Seated Row or Lat Pulldown", sets: "3×10", notes: "" },
-                        { name: "Rear Delt Fly", sets: "2×12-15", notes: "" }
-                    ],
-                    3: [
-                        { name: "Deadlift", sets: "1×1-2 @ 85-90% + 2×4", notes: "Peak strength" },
-                        { name: "Hip Thrust", sets: "2×5", notes: "" },
-                        { name: "Front Squat", sets: "2×6", notes: "" },
-                        { name: "Hamstring Curl or Back Extension", sets: "2×10", notes: "" },
-                        { name: "Light Core", sets: "1-2 sets", notes: "Your choice" }
-                    ]
+                lifting: {
+                    phase1: {
+                        title: "Running-Specific Legs",
+                        subtitle: "Base Building Phase",
+                        exercises: [
+                            { name: "Bulgarian Split Squats", sets: "3×10 each", rest: "90 sec", notes: "Control eccentric" },
+                            { name: "Romanian Deadlifts", sets: "3×10-12", rest: "90 sec", notes: "Hamstring focus" },
+                            { name: "Walking Lunges", sets: "3×12 each", rest: "90 sec", notes: "" },
+                            { name: "Single-Leg Glute Bridge", sets: "3×12 each", rest: "60 sec", notes: "Hold top 2 sec" },
+                            { name: "Calf Raises (Straight)", sets: "3×15", rest: "60 sec", notes: "Full ROM" },
+                            { name: "Calf Raises (Bent)", sets: "3×15", rest: "60 sec", notes: "Soleus focus" },
+                            { name: "Copenhagen Plank", sets: "3×20 sec each", rest: "60 sec", notes: "Adductor strength" }
+                        ]
+                    },
+                    phase2: {
+                        title: "Running Legs (Maintenance)",
+                        subtitle: "Transition Phase - Reduced Volume",
+                        exercises: [
+                            { name: "Bulgarian Split Squats", sets: "3×8 each", rest: "90 sec", notes: "" },
+                            { name: "Romanian Deadlifts", sets: "3×8-10", rest: "90 sec", notes: "" },
+                            { name: "Single-Leg Glute Bridge", sets: "3×10 each", rest: "60 sec", notes: "" },
+                            { name: "Calf Raises", sets: "3×12", rest: "60 sec", notes: "" },
+                            { name: "Copenhagen Plank", sets: "2×20 sec each", rest: "60 sec", notes: "" }
+                        ]
+                    },
+                    phase3: {
+                        title: "Legs (Minimal)",
+                        subtitle: "Peak & Taper - Maintenance Only",
+                        exercises: [
+                            { name: "Bulgarian Split Squats", sets: "2×8 each", rest: "90 sec", notes: "" },
+                            { name: "Single-Leg RDL", sets: "2×8 each", rest: "90 sec", notes: "" },
+                            { name: "Calf Raises", sets: "2×12", rest: "60 sec", notes: "" }
+                        ]
+                    }
                 }
             },
+            
             tuesday: {
-                title: "Short Easy Run",
-                subtitle: "Recovery & Maintenance",
-                exercises: [
-                    { name: "Easy Run", sets: "3-6 km", notes: "Zone 2 pace - should be able to hold conversation" },
-                    { name: "Optional: Strides", sets: "4-6×100m", notes: "Relaxed, fast, full rest between" }
-                ],
-                cooldown: ["Stretch 6-10 min", "Focus: calf, quad, hamstrings, glutes, hip flexor"]
+                running: {
+                    1: { distance: "4 miles", session: "Easy Run", pace: "Record your pace", notes: "Week 1: Record all paces for calibration" },
+                    2: { distance: "4 miles", session: "Easy Run", pace: "9:15-9:45/mile", notes: "" },
+                    3: { distance: "5 miles", session: "Easy Run", pace: "9:15-9:45/mile", notes: "" },
+                    4: { distance: "5 miles", session: "Easy Run", pace: "9:15-9:45/mile", notes: "" },
+                    5: { distance: "5 miles", session: "Easy Run", pace: "9:15-9:45/mile", notes: "" },
+                    6: { distance: "5 miles", session: "Easy Run", pace: "9:15-9:45/mile", notes: "" },
+                    7: { distance: "5 miles", session: "Easy Run", pace: "9:15-9:45/mile", notes: "" },
+                    8: { distance: "5 miles", session: "Easy Run", pace: "9:15-9:45/mile", notes: "" },
+                    9: { distance: "6 miles", session: "Intervals: 5×1000m @ 10K pace", pace: "7:45-8:00 intervals", notes: "4-day running begins" },
+                    10: { distance: "8 miles", session: "MP Run: 1.5mi warm + 5mi @ MP + 1.5mi cool", pace: "8:00/mile for 5 miles", notes: "First sustained marathon pace" },
+                    11: { distance: "7 miles", session: "Intervals: 6×1000m @ 10K pace", pace: "7:45-8:00 intervals", notes: "" },
+                    12: { distance: "9 miles", session: "MP Run: 1.5mi warm + 6mi @ MP + 1.5mi cool", pace: "8:00/mile for 6 miles", notes: "" },
+                    13: { distance: "9 miles", session: "MP Run: 1.5mi warm + 6mi @ MP + 1.5mi cool", pace: "8:00/mile for 6 miles", notes: "Race dress rehearsal" },
+                    14: { distance: "6 miles", session: "MP Run: 1mi warm + 4mi @ MP + 1mi cool", pace: "8:00/mile for 4 miles", notes: "Taper begins" },
+                    15: { distance: "5 miles", session: "MP Run: 1mi warm + 3mi @ MP + 1mi cool", pace: "8:00/mile for 3 miles", notes: "Sharp reduction" },
+                    16: { distance: "3 miles", session: "Easy Shakeout", pace: "9:15-9:45", notes: "Race week - Monday shakeout" }
+                }
             },
+            
             wednesday: {
-                title: "Upper Body Strength + Arms",
-                subtitle: "Bench Press Focus",
-                warmup: ["5 min light bike/jog", "Band pull-aparts 2×12", "Light shoulder mobility"],
-                blocks: {
-                    1: [
-                        { name: "Bench Press", sets: "4×6-8", notes: "" },
-                        { name: "Pull-Up", sets: "4×6-10", notes: "" },
-                        { name: "Incline Dumbbell Press", sets: "3×8-10", notes: "" },
-                        { name: "Barbell Row", sets: "3×8", notes: "" },
-                        { name: "Lateral Raise", sets: "3×12-15", notes: "" },
-                        { name: "Superset: Triceps Pushdown + Dumbbell Curl", sets: "2×12-15", notes: "Minimal rest between exercises" },
-                        { name: "Finisher: Rope Pushdown + Hammer Curl", sets: "2×15-20", notes: "60s rest - pump sets" }
-                    ],
-                    2: [
-                        { name: "Bench Press", sets: "1×3-4 heavy + 3×5-6", notes: "Heavy set first" },
-                        { name: "Weighted Pull-Up", sets: "4×5-8", notes: "Add weight if possible" },
-                        { name: "Incline Dumbbell Press", sets: "3×8-10", notes: "" },
-                        { name: "Barbell Row", sets: "3×6-8", notes: "" },
-                        { name: "Face Pulls", sets: "3×12-15", notes: "" },
-                        { name: "Superset: Skull Crushers + Dumbbell Curl", sets: "3×10-12", notes: "" },
-                        { name: "Finisher: Rope Pushdown + Hammer Curl", sets: "2-3×15-20", notes: "" }
-                    ],
-                    3: [
-                        { name: "Bench Press", sets: "1×1-2 @ 85-90% + 3×4", notes: "Peak strength" },
-                        { name: "Pull-Up", sets: "3×5-8", notes: "" },
-                        { name: "Overhead Press", sets: "3×5", notes: "" },
-                        { name: "Dumbbell Row", sets: "2×10/side", notes: "" },
-                        { name: "Triceps Extension", sets: "2×12", notes: "" },
-                        { name: "Biceps Curl", sets: "2×12", notes: "" },
-                        { name: "Finisher: Rope Pushdown + Hammer Curl", sets: "2×15-20", notes: "Lighter, pump sets" }
-                    ]
+                lifting: {
+                    phase1: {
+                        title: "Upper Push + Abs",
+                        subtitle: "Base Building Phase",
+                        exercises: [
+                            { name: "Bench Press", sets: "4×8-10", rest: "2-3 min", notes: "RPE 8" },
+                            { name: "Incline DB Press", sets: "3×10-12", rest: "90 sec", notes: "" },
+                            { name: "Seated OHP", sets: "3×10-12", rest: "90 sec", notes: "" },
+                            { name: "Cable Flyes", sets: "3×12-15", rest: "60 sec", notes: "" },
+                            { name: "Lateral Raises", sets: "4×12-15", rest: "60 sec", notes: "" },
+                            { name: "Tricep Pushdowns", sets: "3×12-15", rest: "60 sec", notes: "" },
+                            { name: "Overhead Tricep Extension", sets: "3×12-15", rest: "60 sec", notes: "" },
+                            { name: "Cable Crunches", sets: "3×15-20", rest: "60 sec", notes: "" },
+                            { name: "Hanging Leg Raises", sets: "3×12-15", rest: "60 sec", notes: "" }
+                        ]
+                    },
+                    phase2: {
+                        title: "Upper Push + Abs",
+                        subtitle: "Transition Phase - Strength Focus",
+                        exercises: [
+                            { name: "Bench Press", sets: "4×5-6", rest: "3 min", notes: "RPE 7-8" },
+                            { name: "Incline DB Press", sets: "3×8-10", rest: "2 min", notes: "" },
+                            { name: "Standing OHP", sets: "3×6-8", rest: "2 min", notes: "" },
+                            { name: "Lateral Raises", sets: "3×12-15", rest: "60 sec", notes: "" },
+                            { name: "Tricep Dips", sets: "3×8-10", rest: "90 sec", notes: "" },
+                            { name: "Cable Crunches", sets: "3×15-20", rest: "60 sec", notes: "" },
+                            { name: "Hanging Leg Raises", sets: "3×12-15", rest: "60 sec", notes: "" }
+                        ]
+                    },
+                    phase3: {
+                        title: "Upper Push (Minimal)",
+                        subtitle: "Peak & Taper - Maintenance Only",
+                        exercises: [
+                            { name: "Bench Press", sets: "3×6-8", rest: "2-3 min", notes: "" },
+                            { name: "Incline DB Press", sets: "2×8-10", rest: "90 sec", notes: "" },
+                            { name: "Lateral Raises", sets: "2×12", rest: "60 sec", notes: "" },
+                            { name: "Tricep Pushdowns", sets: "2×12", rest: "60 sec", notes: "" },
+                            { name: "Plank", sets: "2×45 sec", rest: "60 sec", notes: "" }
+                        ]
+                    }
+                },
+                running: {
+                    9: { distance: "4 miles", session: "Recovery Run", pace: "9:45+", notes: "Wednesday recovery - truly easy" },
+                    10: { distance: "4 miles", session: "Recovery Run", pace: "9:45+", notes: "" },
+                    11: { distance: "4 miles", session: "Recovery Run", pace: "9:45+", notes: "" },
+                    12: { distance: "4 miles", session: "Recovery Run", pace: "9:45+", notes: "" },
+                    13: { distance: "4 miles", session: "Recovery Run", pace: "9:45+", notes: "" },
+                    14: { distance: "3 miles", session: "Recovery Run", pace: "9:45+", notes: "" },
+                    15: null,
+                    16: { distance: "3 miles", session: "Easy + Strides", pace: "Easy with 4 strides", notes: "Race week - Wednesday" }
                 }
             },
+            
             thursday: {
-                title: "Long Easy Run",
-                subtitle: "Aerobic Base Building",
-                exercises: [
-                    { name: "Easy Run", sets: "8-12 km", notes: "Zone 2 pace - conversational" },
-                    { name: "Optional: Moderate Finish", sets: "Last 10-15 min", notes: "Every other week - slightly faster pace" }
-                ],
-                cooldown: ["Stretch 6-10 min", "Focus: calf, quad, hamstrings, glutes, hip flexor"]
-            },
-            friday: {
-                title: "Lower Body Strength",
-                subtitle: "Squat Focus",
-                warmup: ["5 min light bike/jog", "Hip + ankle mobility (2-3 min)", "Glute activation: band walks 2×15"],
-                blocks: {
-                    1: [
-                        { name: "Back Squat", sets: "4×6-8", notes: "" },
-                        { name: "Romanian Deadlift", sets: "3×8", notes: "" },
-                        { name: "Leg Press or Hack Squat", sets: "3×10", notes: "" },
-                        { name: "Split Squat", sets: "3×8/leg", notes: "" },
-                        { name: "Calf Raises", sets: "3×12-15", notes: "" },
-                        { name: "Plank", sets: "3×30-60 sec", notes: "" }
-                    ],
-                    2: [
-                        { name: "Back Squat", sets: "1×4 heavy + 3×6 lighter", notes: "Heavy set first, then reduce weight" },
-                        { name: "Romanian Deadlift", sets: "3×6-8", notes: "" },
-                        { name: "Bulgarian Split Squat", sets: "3×8", notes: "" },
-                        { name: "Calf Raises", sets: "4×10-12", notes: "" },
-                        { name: "Cable Crunch", sets: "3×12-15", notes: "" }
-                    ],
-                    3: [
-                        { name: "Back Squat", sets: "1×1-2 @ 85-90% + 3×4 @ 75-80%", notes: "Peak strength - max effort on heavy single/double" },
-                        { name: "Romanian Deadlift", sets: "3×5", notes: "" },
-                        { name: "Lunges", sets: "2×10/leg", notes: "" },
-                        { name: "Calf Raises", sets: "2×12", notes: "" },
-                        { name: "Heavy Cable Crunch", sets: "2×12", notes: "" }
-                    ]
+                running: {
+                    1: { distance: "4 miles", session: "Tempo: 1mi warm + 2mi @ LT + 1mi cool", pace: "Record tempo pace", notes: "" },
+                    2: { distance: "4.5 miles", session: "Tempo: 1mi warm + 2.5mi @ LT + 1mi cool", pace: "8:00-8:15 tempo", notes: "" },
+                    3: { distance: "5 miles", session: "Tempo: 1mi warm + 3mi @ LT + 1mi cool", pace: "8:00-8:15 tempo", notes: "" },
+                    4: { distance: "5 miles", session: "Tempo: 1mi warm + 3mi @ LT + 1mi cool", pace: "8:00-8:15 tempo", notes: "" },
+                    5: { distance: "5.5 miles", session: "Tempo: 1mi warm + 3.5mi @ LT + 1mi cool", pace: "8:00-8:15 tempo", notes: "" },
+                    6: { distance: "6 miles", session: "Tempo: 1mi warm + 4mi @ LT + 1mi cool", pace: "8:00-8:15 tempo", notes: "Tempo work extending" },
+                    7: { distance: "6 miles", session: "Tempo: 1mi warm + 4mi @ LT + 1mi cool", pace: "8:00-8:15 tempo", notes: "" },
+                    8: { distance: "6.5 miles", session: "Tempo: 1mi warm + 4.5mi @ LT + 1mi cool", pace: "8:00-8:15 tempo", notes: "" },
+                    9: { distance: "6 miles", session: "Tempo: 1mi warm + 4mi @ LT + 1mi cool", pace: "8:00-8:15 tempo", notes: "" },
+                    10: { distance: "6 miles", session: "Tempo: 1mi warm + 4mi @ LT + 1mi cool", pace: "8:00-8:15 tempo", notes: "" },
+                    11: { distance: "6.5 miles", session: "Tempo: 1mi warm + 4.5mi @ LT + 1mi cool", pace: "8:00-8:15 tempo", notes: "" },
+                    12: { distance: "7 miles", session: "Tempo: 1mi warm + 5mi @ LT + 1mi cool", pace: "8:00-8:15 tempo", notes: "" },
+                    13: { distance: "5 miles", session: "Tempo: 1mi warm + 3mi @ LT + 1mi cool", pace: "8:00-8:15 tempo", notes: "" },
+                    14: { distance: "4 miles + 4×100m", session: "Easy Run + Strides", pace: "9:15-9:45 + strides", notes: "" },
+                    15: { distance: "4 miles + 4×100m", session: "Easy Run + Strides", pace: "9:15-9:45 + strides", notes: "Engine tuned" },
+                    16: null
                 }
             },
-            saturday: { title: "Rest Day", subtitle: "Recovery" },
-            sunday: { title: "Rest Day", subtitle: "Recovery" }
+            
+            friday: {
+                lifting: {
+                    phase1: {
+                        title: "Upper Pull",
+                        subtitle: "Base Building Phase",
+                        exercises: [
+                            { name: "Weighted Pull-ups", sets: "4×6-8", rest: "2-3 min", notes: "Or lat pulldown" },
+                            { name: "Barbell Rows", sets: "4×8-10", rest: "2 min", notes: "RPE 8" },
+                            { name: "Seated Cable Row", sets: "3×10-12", rest: "90 sec", notes: "" },
+                            { name: "Face Pulls", sets: "3×15-20", rest: "60 sec", notes: "" },
+                            { name: "Rear Delt Flyes", sets: "3×12-15", rest: "60 sec", notes: "" },
+                            { name: "Barbell Curls", sets: "3×10-12", rest: "60 sec", notes: "" },
+                            { name: "Hammer Curls", sets: "3×10-12", rest: "60 sec", notes: "" }
+                        ]
+                    },
+                    phase2: {
+                        title: "Upper Pull",
+                        subtitle: "Transition Phase - Strength Focus",
+                        exercises: [
+                            { name: "Weighted Pull-ups", sets: "4×5-6", rest: "3 min", notes: "" },
+                            { name: "Barbell Rows", sets: "4×6-8", rest: "2 min", notes: "" },
+                            { name: "Face Pulls", sets: "3×15-20", rest: "60 sec", notes: "" },
+                            { name: "Barbell Curls", sets: "3×8-10", rest: "90 sec", notes: "" },
+                            { name: "Hammer Curls", sets: "2×10-12", rest: "60 sec", notes: "" }
+                        ]
+                    },
+                    phase3: {
+                        title: "Upper Pull (Minimal)",
+                        subtitle: "Peak & Taper - Maintenance Only",
+                        exercises: [
+                            { name: "Pull-ups", sets: "3×6-8", rest: "2 min", notes: "" },
+                            { name: "Cable Row", sets: "2×10", rest: "90 sec", notes: "" },
+                            { name: "Face Pulls", sets: "2×15", rest: "60 sec", notes: "" },
+                            { name: "Barbell Curls", sets: "2×10", rest: "60 sec", notes: "" }
+                        ]
+                    }
+                },
+                running: {
+                    16: { distance: "2 miles", session: "Shakeout", pace: "Easy", notes: "Race week - Friday shakeout" }
+                }
+            },
+            
+            saturday: {
+                running: {
+                    1: { distance: "8 miles", session: "Long Run", pace: "Record your pace", notes: "" },
+                    2: { distance: "9 miles", session: "Long Run", pace: "9:00-9:30", notes: "" },
+                    3: { distance: "9 miles", session: "Long Run", pace: "9:00-9:30", notes: "" },
+                    4: { distance: "10 miles", session: "Long Run", pace: "9:00-9:30", notes: "First double-digit long run" },
+                    5: { distance: "10 miles", session: "Long Run", pace: "9:00-9:30", notes: "Consolidation week" },
+                    6: { distance: "11 miles", session: "Long Run", pace: "9:00-9:25", notes: "" },
+                    7: { distance: "12 miles", session: "Long Run", pace: "9:00-9:20", notes: "" },
+                    8: { distance: "13 miles", session: "Long Run w/ MP: 10 easy + 3 @ MP", pace: "8:00 last 3 miles", notes: "Phase 1 peak - first taste of MP" },
+                    9: { distance: "13 miles", session: "Long Run", pace: "9:00-9:20", notes: "" },
+                    10: { distance: "14 miles", session: "Long Run", pace: "9:00-9:20", notes: "" },
+                    11: { distance: "15 miles", session: "Long Run w/ MP: 11 easy + 4 @ MP", pace: "8:00 last 4 miles", notes: "Big week - tests race fitness" },
+                    12: { distance: "16 miles", session: "Long Run w/ MP: 12 easy + 4 @ MP", pace: "8:00 last 4 miles", notes: "Peak week" },
+                    13: { distance: "14 miles", session: "Long Run", pace: "9:00-9:15", notes: "" },
+                    14: { distance: "10 miles", session: "Long Run", pace: "9:00-9:20", notes: "" },
+                    15: { distance: "7 miles", session: "Easy Long Run", pace: "9:00-9:30", notes: "" },
+                    16: null
+                }
+            },
+            
+            sunday: {
+                rest: true,
+                race: {
+                    16: { 
+                        title: "🏁 RACE DAY",
+                        distance: "26.2 miles",
+                        target: "Sub-3:30 (8:00/mile average)",
+                        notes: "Trust the training. Execute the plan.",
+                        strategy: [
+                            "Miles 1-6: 8:05-8:10/mile - Bank nothing, resist adrenaline",
+                            "Miles 7-13: 8:00/mile - Settle into rhythm",
+                            "Miles 14-20: 8:00/mile - The race starts here",
+                            "Miles 21-26.2: 7:55-8:00/mile - Push the final 5K"
+                        ]
+                    }
+                }
+            }
         };
 
         function calculateWeekNumber(date) {
             const diffTime = date - programStart;
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
             const weekNum = Math.ceil(diffDays / 7);
-            return Math.max(1, Math.min(12, weekNum));
+            return Math.max(1, Math.min(16, weekNum));
         }
 
-        function getBlock(weekNum) {
-            if (weekNum <= 4) return 1;
-            if (weekNum <= 8) return 2;
+        function getPhase(weekNum) {
+            if (weekNum <= 8) return 1;
+            if (weekNum <= 12) return 2;
             return 3;
+        }
+
+        function getPhaseName(phase) {
+            return workoutProgram.phases[phase].name;
         }
 
         function getDayName(date) {
@@ -481,51 +599,144 @@
         function renderWorkout() {
             const dayName = getDayName(currentDate);
             const weekNum = calculateWeekNumber(currentDate);
-            const block = getBlock(weekNum);
-            const workout = workoutProgram[dayName];
+            const phase = getPhase(weekNum);
+            const phaseName = getPhaseName(phase);
 
             document.getElementById('dateDisplay').textContent = formatDate(currentDate);
-            document.getElementById('weekInfo').textContent = `Week ${weekNum} • Block ${block}`;
+            document.getElementById('weekInfo').textContent = `Week ${weekNum}`;
+            document.getElementById('phaseInfo').textContent = phaseName;
 
             const container = document.getElementById('workoutContainer');
 
-            if (!workout || workout.title === "Rest Day") {
-                container.innerHTML = `<div class="rest-day"><h2>🛋️ Rest Day</h2><p>Recovery is when you get stronger.<br>Enjoy your day off!</p></div>`;
+            // Check for race day
+            if (dayName === 'sunday' && weekNum === 16) {
+                const race = workoutProgram.sunday.race[16];
+                let html = `<div class="workout-card">
+                    <div class="workout-title">${race.title}</div>
+                    <div class="workout-subtitle">${race.distance} - ${race.target}</div>
+                    <div class="pace-info">
+                        <div class="pace-title">🎯 Pacing Strategy</div>`;
+                race.strategy.forEach(item => {
+                    html += `<div class="warm-up-item">${item}</div>`;
+                });
+                html += `</div>
+                    <div class="pace-info" style="margin-top: 12px;">
+                        <div class="pace-title">💡 Race Day Notes</div>
+                        <div class="pace-text">${race.notes}</div>
+                    </div>
+                </div>`;
+                container.innerHTML = html;
                 return;
             }
 
-            let html = `<div class="workout-card"><div class="workout-title">${workout.title}</div><div class="workout-subtitle">${workout.subtitle}</div>`;
-
-            if (workout.warmup) {
-                html += `<div class="warm-up-section"><div class="warm-up-title">🔥 Warm-up</div>`;
-                workout.warmup.forEach(item => {
-                    html += `<div class="warm-up-item">${item}</div>`;
-                });
-                html += `</div>`;
+            // Sunday rest day (except week 16)
+            if (dayName === 'sunday') {
+                container.innerHTML = `<div class="rest-day"><h2>🛋️ Complete Rest</h2><p>Recovery is where adaptation happens.<br>Sleep 8+ hours. You've earned it.</p></div>`;
+                return;
             }
 
-            if (workout.blocks) {
-                const exercises = workout.blocks[block];
-                exercises.forEach(ex => {
-                    html += `<div class="exercise"><div class="exercise-name">${ex.name}</div><div class="exercise-details"><span class="exercise-sets">${ex.sets}</span></div>${ex.notes ? `<div class="exercise-notes">${ex.notes}</div>` : ''}</div>`;
-                });
-            } else if (workout.exercises) {
-                workout.exercises.forEach(ex => {
-                    html += `<div class="exercise"><div class="exercise-name">${ex.name}</div><div class="exercise-details"><span class="exercise-sets">${ex.sets}</span></div>${ex.notes ? `<div class="exercise-notes">${ex.notes}</div>` : ''}</div>`;
-                });
+            let html = '';
+
+            // Monday - Lifting only
+            if (dayName === 'monday') {
+                const phaseKey = `phase${phase}`;
+                const workout = workoutProgram.monday.lifting[phaseKey];
+                html = renderLiftingWorkout(workout);
             }
 
-            if (workout.cooldown) {
-                html += `<div class="warm-up-section" style="margin-top: 12px;"><div class="warm-up-title">🧊 Cool-down</div>`;
-                workout.cooldown.forEach(item => {
-                    html += `<div class="warm-up-item">${item}</div>`;
-                });
-                html += `</div>`;
+            // Tuesday - Running only
+            if (dayName === 'tuesday') {
+                const run = workoutProgram.tuesday.running[weekNum];
+                html = renderRunningWorkout(run);
             }
 
-            html += `<div class="progress-info"><div class="progress-title">💡 Progression Rule</div><div class="progress-text">If you hit the top of the rep range for all sets with good form → Increase weight next week (usually +5 lb). Never train compounds to failure!</div></div></div>`;
+            // Wednesday - Lifting (all phases) + Running (phase 2 & 3 only)
+            if (dayName === 'wednesday') {
+                const phaseKey = `phase${phase}`;
+                const lifting = workoutProgram.wednesday.lifting[phaseKey];
+                html = renderLiftingWorkout(lifting);
+                
+                // Add running for weeks 9+
+                if (weekNum >= 9) {
+                    const run = workoutProgram.wednesday.running[weekNum];
+                    if (run) {
+                        html += renderRunningWorkout(run, "AM Session");
+                    }
+                }
+            }
+
+            // Thursday - Running only
+            if (dayName === 'thursday') {
+                const run = workoutProgram.thursday.running[weekNum];
+                if (run) {
+                    html = renderRunningWorkout(run);
+                }
+            }
+
+            // Friday - Lifting + optional running (week 16)
+            if (dayName === 'friday') {
+                const phaseKey = `phase${phase}`;
+                const lifting = workoutProgram.friday.lifting[phaseKey];
+                html = renderLiftingWorkout(lifting);
+                
+                if (weekNum === 16) {
+                    const run = workoutProgram.friday.running[16];
+                    html += renderRunningWorkout(run, "Evening Session");
+                }
+            }
+
+            // Saturday - Running only
+            if (dayName === 'saturday') {
+                const run = workoutProgram.saturday.running[weekNum];
+                if (run) {
+                    html = renderRunningWorkout(run);
+                }
+            }
 
             container.innerHTML = html;
+        }
+
+        function renderLiftingWorkout(workout) {
+            let html = `<div class="workout-card">
+                <div class="workout-title">${workout.title}</div>
+                <div class="workout-subtitle">${workout.subtitle}</div>`;
+            
+            workout.exercises.forEach(ex => {
+                html += `<div class="exercise">
+                    <div class="exercise-name">${ex.name}</div>
+                    <div class="exercise-details">
+                        <span class="exercise-sets">${ex.sets}</span>
+                        ${ex.rest ? `<span>• Rest: ${ex.rest}</span>` : ''}
+                    </div>
+                    ${ex.notes ? `<div class="exercise-notes">${ex.notes}</div>` : ''}
+                </div>`;
+            });
+
+            html += `</div>`;
+            return html;
+        }
+
+        function renderRunningWorkout(run, sessionLabel = "") {
+            if (!run) return '';
+            
+            let html = `<div class="workout-card">
+                ${sessionLabel ? `<div class="workout-subtitle">${sessionLabel}</div>` : ''}
+                <div class="workout-title">🏃‍♂️ ${run.session}</div>
+                <div class="workout-subtitle">${run.distance}</div>
+                <div class="pace-info">
+                    <div class="pace-title">🎯 Pace/Effort</div>
+                    <div class="pace-text">${run.pace}</div>
+                </div>`;
+            
+            if (run.notes) {
+                html += `<div class="pace-info" style="margin-top: 12px;">
+                    <div class="pace-title">💡 Notes</div>
+                    <div class="pace-text">${run.notes}</div>
+                </div>`;
+            }
+
+            html += `</div>`;
+            return html;
         }
 
         function changeDay(offset) {
@@ -538,7 +749,6 @@
             renderWorkout();
         }
 
-        // Prevent rubber-band scrolling on iOS
         document.addEventListener('touchmove', function(e) {
             if (e.touches.length > 1) {
                 e.preventDefault();
