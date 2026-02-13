@@ -4,37 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="Marathon Training">
-    <title>16-Week Hybrid Training Programme</title>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Hybrid Training">
+    <meta name="theme-color" content="#000000">
+    <title>Hybrid Training</title>
     <style>
         :root {
-            --color-bg-primary: #fcfcf9;
-            --color-surface: #fffffd;
-            --color-text: #13343b;
-            --color-text-secondary: #626c71;
-            --color-primary: #21808d;
-            --color-primary-hover: #1d7480;
-            --color-border: rgba(94, 82, 64, 0.2);
-            --color-card-border: rgba(94, 82, 64, 0.12);
-            --color-success: #21808d;
-            --color-run: rgba(59, 130, 246, 0.08);
-            --color-lift: rgba(245, 158, 11, 0.08);
-            --color-rest: rgba(34, 197, 94, 0.08);
-        }
-
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --color-bg-primary: #1f2121;
-                --color-surface: #262828;
-                --color-text: #f5f5f5;
-                --color-text-secondary: rgba(167, 169, 169, 0.7);
-                --color-primary: #32b8c6;
-                --color-primary-hover: #2da6b2;
-                --color-border: rgba(119, 124, 124, 0.3);
-                --color-card-border: rgba(119, 124, 124, 0.2);
-                --color-success: #32b8c6;
-            }
+            --bg-primary: #000000;
+            --bg-elevated: rgba(28, 28, 30, 0.72);
+            --bg-card: rgba(44, 44, 46, 0.52);
+            --bg-card-hover: rgba(58, 58, 60, 0.55);
+            --bg-glass: rgba(255, 255, 255, 0.06);
+            --bg-glass-strong: rgba(255, 255, 255, 0.10);
+            --text-primary: #f5f5f7;
+            --text-secondary: rgba(235, 235, 245, 0.50);
+            --text-tertiary: rgba(235, 235, 245, 0.30);
+            --accent: #0a84ff;
+            --accent-glow: rgba(10, 132, 255, 0.25);
+            --accent-subtle: rgba(10, 132, 255, 0.12);
+            --green: #30d158;
+            --green-subtle: rgba(48, 209, 88, 0.12);
+            --orange: #ff9f0a;
+            --orange-subtle: rgba(255, 159, 10, 0.12);
+            --separator: rgba(255, 255, 255, 0.08);
+            --border-glass: rgba(255, 255, 255, 0.12);
+            --border-glass-strong: rgba(255, 255, 255, 0.18);
+            --radius-sm: 12px;
+            --radius-md: 16px;
+            --radius-lg: 22px;
+            --radius-xl: 28px;
         }
 
         * {
@@ -44,302 +42,405 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--color-bg-primary);
-            color: var(--color-text);
-            line-height: 1.6;
-            padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 16px) env(safe-area-inset-bottom, 16px) env(safe-area-inset-left, 16px);
-            padding-top: max(16px, env(safe-area-inset-top));
-            padding-bottom: max(16px, env(safe-area-inset-bottom));
-            max-width: 100%;
-            margin: 0;
-            overflow-x: hidden;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 16px;
-            padding: 20px 16px;
-            background: var(--color-surface);
-            border-radius: 16px;
-            border: 1px solid var(--color-card-border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-
-        .header h1 {
-            font-size: 24px;
-            margin-bottom: 8px;
-            color: var(--color-text);
-            font-weight: 700;
-        }
-
-        .header-subtitle {
-            font-size: 13px;
-            color: var(--color-text-secondary);
-            margin-bottom: 12px;
-        }
-
-        .date-display {
-            font-size: 15px;
-            color: var(--color-text-secondary);
-            margin-bottom: 12px;
-        }
-
-        .week-info {
-            display: inline-block;
-            padding: 8px 16px;
-            background: var(--color-run);
-            border-radius: 24px;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--color-primary);
-        }
-
-        .phase-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            background: var(--color-lift);
-            border-radius: 16px;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--color-primary);
-            margin-left: 8px;
-        }
-
-        .workout-card {
-            background: var(--color-surface);
-            border: 1px solid var(--color-card-border);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        .workout-title {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 6px;
-            color: var(--color-text);
-        }
-
-        .workout-subtitle {
-            font-size: 14px;
-            color: var(--color-text-secondary);
-            margin-bottom: 20px;
-        }
-
-        .exercise {
-            padding: 16px;
-            margin-bottom: 12px;
-            background: var(--color-bg-primary);
-            border-radius: 12px;
-            border-left: 4px solid var(--color-primary);
-            min-height: 60px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .exercise-name {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 6px;
-            color: var(--color-text);
-            line-height: 1.4;
-        }
-
-        .exercise-details {
-            font-size: 14px;
-            color: var(--color-text-secondary);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .exercise-sets {
-            font-weight: 600;
-            color: var(--color-primary);
-            font-size: 15px;
-        }
-
-        .exercise-notes {
-            font-size: 13px;
-            color: var(--color-text-secondary);
-            font-style: italic;
-            margin-top: 6px;
-            line-height: 1.5;
-        }
-
-        .rest-day {
-            text-align: center;
-            padding: 48px 20px;
-            background: var(--color-rest);
-            border-radius: 16px;
-            min-height: 300px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .rest-day h2 {
-            font-size: 32px;
-            margin-bottom: 12px;
-            color: var(--color-success);
-            font-weight: 700;
-        }
-
-        .rest-day p {
-            font-size: 16px;
-            color: var(--color-text-secondary);
-            line-height: 1.6;
-        }
-
-        .warm-up-section {
-            background: var(--color-lift);
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 20px;
-        }
-
-        .warm-up-title {
-            font-size: 13px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: var(--color-text);
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-        }
-
-        .warm-up-item {
-            font-size: 14px;
-            color: var(--color-text-secondary);
-            margin-bottom: 8px;
-            padding-left: 20px;
-            position: relative;
-            line-height: 1.5;
-        }
-
-        .warm-up-item:before {
-            content: "•";
-            position: absolute;
-            left: 8px;
-            color: var(--color-primary);
-            font-weight: bold;
-        }
-
-        .controls {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 16px;
-        }
-
-        .btn {
-            flex: 1;
-            padding: 16px 20px;
-            font-size: 16px;
-            font-weight: 600;
-            border: none;
-            border-radius: 12px;
-            background: var(--color-primary);
-            color: white;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 8px rgba(33, 128, 141, 0.2);
-            -webkit-appearance: none;
-            appearance: none;
-            touch-action: manipulation;
-            min-height: 50px;
-        }
-
-        .btn:active {
-            transform: scale(0.97);
-            background: var(--color-primary-hover);
-            box-shadow: 0 1px 4px rgba(33, 128, 141, 0.3);
-        }
-
-        .btn-secondary {
-            background: var(--color-surface);
-            color: var(--color-primary);
-            border: 2px solid var(--color-primary);
-            box-shadow: none;
-        }
-
-        .btn-secondary:active {
-            background: var(--color-run);
-        }
-
-        .pace-info {
-            margin-top: 20px;
-            padding: 16px;
-            background: var(--color-run);
-            border-radius: 12px;
-            border-left: 4px solid var(--color-primary);
-        }
-
-        .pace-title {
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--color-text);
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .pace-text {
-            font-size: 14px;
-            color: var(--color-text-secondary);
-            line-height: 1.6;
-        }
-
         html {
             scroll-behavior: smooth;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.5;
+            padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 16px) env(safe-area-inset-bottom, 16px) env(safe-area-inset-left, 16px);
+            padding-top: max(16px, env(safe-area-inset-top));
+            padding-bottom: max(80px, env(safe-area-inset-bottom));
+            max-width: 100%;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            min-height: 100dvh;
         }
 
-        .workout-card, .rest-day {
-            animation: fadeIn 0.3s ease;
+        .app-container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* ── Header ── */
+        .header {
+            text-align: center;
+            margin-bottom: 12px;
+            padding: 24px 20px 20px;
+            background: var(--bg-elevated);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border-glass);
+            position: sticky;
+            top: 8px;
+            z-index: 100;
+            backdrop-filter: saturate(180%) blur(40px);
+            -webkit-backdrop-filter: saturate(180%) blur(40px);
+        }
+
+        .header h1 {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.3px;
+            margin-bottom: 4px;
+        }
+
+        .header-subtitle {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-bottom: 14px;
+            letter-spacing: 0.1px;
+        }
+
+        .date-display {
+            font-size: 15px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-bottom: 14px;
+        }
+
+        .badge-row {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .week-info {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 14px;
+            background: var(--accent-subtle);
+            border: 1px solid rgba(10, 132, 255, 0.20);
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent);
+            letter-spacing: 0.2px;
+        }
+
+        .phase-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 14px;
+            background: var(--orange-subtle);
+            border: 1px solid rgba(255, 159, 10, 0.20);
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--orange);
+            letter-spacing: 0.2px;
+        }
+
+        /* ── Controls ── */
+        .controls {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px 16px;
+            font-size: 15px;
+            font-weight: 600;
+            border: none;
+            border-radius: var(--radius-md);
+            background: var(--bg-glass-strong);
+            border: 1px solid var(--border-glass);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            -webkit-appearance: none;
+            appearance: none;
+            touch-action: manipulation;
+            min-height: 48px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            letter-spacing: -0.1px;
+        }
+
+        .btn:active {
+            transform: scale(0.96);
+            background: rgba(255, 255, 255, 0.16);
         }
 
         .btn:focus {
             outline: none;
         }
+
+        .btn-today {
+            background: var(--accent);
+            border-color: transparent;
+            color: #fff;
+            box-shadow: 0 2px 16px var(--accent-glow);
+        }
+
+        .btn-today:active {
+            background: #0070e0;
+        }
+
+        /* ── Workout Card ── */
+        .workout-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-xl);
+            padding: 24px 20px;
+            margin-bottom: 16px;
+            backdrop-filter: saturate(150%) blur(30px);
+            -webkit-backdrop-filter: saturate(150%) blur(30px);
+            animation: cardIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .workout-title {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: var(--text-primary);
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+
+        .workout-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        /* ── Exercise Items ── */
+        .exercise {
+            padding: 16px;
+            margin-bottom: 8px;
+            background: var(--bg-glass);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--separator);
+            min-height: 56px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: background 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .exercise::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--accent);
+            border-radius: 0 3px 3px 0;
+            opacity: 0.8;
+        }
+
+        .exercise-name {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--text-primary);
+            line-height: 1.4;
+            padding-left: 4px;
+        }
+
+        .exercise-details {
+            font-size: 13px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            padding-left: 4px;
+        }
+
+        .exercise-sets {
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 14px;
+        }
+
+        .exercise-notes {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            font-style: normal;
+            margin-top: 6px;
+            line-height: 1.5;
+            padding-left: 4px;
+            font-weight: 400;
+        }
+
+        /* ── Rest Day ── */
+        .rest-day {
+            text-align: center;
+            padding: 56px 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-xl);
+            min-height: 340px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: saturate(150%) blur(30px);
+            -webkit-backdrop-filter: saturate(150%) blur(30px);
+            animation: cardIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .rest-day h2 {
+            font-size: 28px;
+            margin-bottom: 12px;
+            color: var(--green);
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+
+        .rest-day p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            max-width: 280px;
+        }
+
+        /* ── Warm-up Section ── */
+        .warm-up-section {
+            background: var(--bg-glass);
+            border: 1px solid var(--separator);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .warm-up-title {
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .warm-up-item {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            padding-left: 18px;
+            position: relative;
+            line-height: 1.5;
+        }
+
+        .warm-up-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .warm-up-item::before {
+            content: "";
+            position: absolute;
+            left: 4px;
+            top: 7px;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--accent);
+            opacity: 0.7;
+        }
+
+        /* ── Pace Info ── */
+        .pace-info {
+            margin-top: 16px;
+            padding: 16px;
+            background: var(--bg-glass);
+            border: 1px solid var(--separator);
+            border-radius: var(--radius-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pace-info::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--accent);
+            border-radius: 0 3px 3px 0;
+            opacity: 0.6;
+        }
+
+        .pace-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .pace-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ── Animations ── */
+        @keyframes cardIn {
+            from {
+                opacity: 0;
+                transform: translateY(16px) scale(0.98);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* ── Subtle ambient glow behind header ── */
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 60px;
+            background: radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        /* ── Scrollbar ── */
+        ::-webkit-scrollbar {
+            width: 0;
+        }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>🏃‍♂️💪 Hybrid Training</h1>
-        <div class="header-subtitle">Upper Body Hypertrophy + Sub-3:30 Marathon</div>
-        <div class="date-display" id="dateDisplay"></div>
-        <div>
-            <span class="week-info" id="weekInfo"></span>
-            <span class="phase-badge" id="phaseInfo"></span>
+    <div class="app-container">
+        <div class="header">
+            <h1>Hybrid Training</h1>
+            <div class="header-subtitle">Upper Body Hypertrophy + Sub-3:30 Marathon</div>
+            <div class="date-display" id="dateDisplay"></div>
+            <div class="badge-row">
+                <span class="week-info" id="weekInfo"></span>
+                <span class="phase-badge" id="phaseInfo"></span>
+            </div>
         </div>
-    </div>
 
-    <div class="controls">
-        <button class="btn" onclick="changeDay(-1)">← Previous</button>
-        <button class="btn btn-secondary" onclick="goToToday()">Today</button>
-        <button class="btn" onclick="changeDay(1)">Next →</button>
-    </div>
+        <div class="controls">
+            <button class="btn" onclick="changeDay(-1)">Previous</button>
+            <button class="btn btn-today" onclick="goToToday()">Today</button>
+            <button class="btn" onclick="changeDay(1)">Next</button>
+        </div>
 
-    <div id="workoutContainer"></div>
+        <div id="workoutContainer"></div>
+    </div>
 
     <script>
         let programStart;
@@ -410,7 +511,7 @@
 
             // Sunday — always rest
             if (dayName === 'sunday') {
-                container.innerHTML = `<div class="rest-day"><h2>🛋️ Complete Rest</h2><p>Recovery is where adaptation happens.<br>Sleep 7–9 hours. You've earned it.</p></div>`;
+                container.innerHTML = `<div class="rest-day"><h2>Complete Rest</h2><p>Recovery is where adaptation happens.<br>Sleep 7-9 hours. You've earned it.</p></div>`;
                 return;
             }
 
@@ -421,13 +522,13 @@
                     <div class="workout-title">${race.title}</div>
                     <div class="workout-subtitle">${race.distance} — ${race.target}</div>
                     <div class="pace-info">
-                        <div class="pace-title">🎯 Pacing Strategy</div>`;
+                        <div class="pace-title">Pacing Strategy</div>`;
                 race.strategy.forEach(item => {
                     html += `<div class="warm-up-item">${item}</div>`;
                 });
                 html += `</div>
-                    <div class="pace-info" style="margin-top: 12px;">
-                        <div class="pace-title">💡 Race Day Notes</div>
+                    <div class="pace-info" style="margin-top: 8px;">
+                        <div class="pace-title">Race Day Notes</div>
                         <div class="pace-text">${race.notes}</div>
                     </div>
                 </div>`;
@@ -490,13 +591,13 @@
             let html = `<div class="workout-card">
                 <div class="workout-title">${workout.title}</div>
                 <div class="workout-subtitle">${workout.subtitle}</div>`;
-            
+
             workout.exercises.forEach(ex => {
                 html += `<div class="exercise">
                     <div class="exercise-name">${ex.name}</div>
                     <div class="exercise-details">
                         <span class="exercise-sets">${ex.sets}</span>
-                        ${ex.rest ? `<span>• Rest: ${ex.rest}</span>` : ''}
+                        ${ex.rest ? `<span>Rest ${ex.rest}</span>` : ''}
                     </div>
                     ${ex.notes ? `<div class="exercise-notes">${ex.notes}</div>` : ''}
                 </div>`;
@@ -508,19 +609,19 @@
 
         function renderRunningWorkout(run, sessionLabel = "") {
             if (!run) return '';
-            
+
             let html = `<div class="workout-card">
                 ${sessionLabel ? `<div class="workout-subtitle">${sessionLabel}</div>` : ''}
-                <div class="workout-title">🏃‍♂️ ${run.session}</div>
+                <div class="workout-title">${run.session}</div>
                 <div class="workout-subtitle">${run.distance}</div>
                 <div class="pace-info">
-                    <div class="pace-title">🎯 Pace/Effort</div>
+                    <div class="pace-title">Pace / Effort</div>
                     <div class="pace-text">${run.pace}</div>
                 </div>`;
-            
+
             if (run.notes) {
-                html += `<div class="pace-info" style="margin-top: 12px;">
-                    <div class="pace-title">💡 Notes</div>
+                html += `<div class="pace-info" style="margin-top: 8px;">
+                    <div class="pace-title">Notes</div>
                     <div class="pace-text">${run.notes}</div>
                 </div>`;
             }
