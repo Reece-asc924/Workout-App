@@ -370,7 +370,6 @@
         }
 
         function getPhase(weekNum) {
-            if (weekNum <= 8) return 1;
             if (weekNum <= 12) return 2;
             return 3;
         }
@@ -401,13 +400,26 @@
             document.getElementById('phaseInfo').textContent = phaseName;
 
             const container = document.getElementById('workoutContainer');
+            const startWeek = workoutProgram.startWeek || 8;
 
-            // Check for race day
-            if (dayName === 'sunday' && weekNum === 16) {
-                const race = workoutProgram.sunday.race[16];
+            // Pre-programme weeks
+            if (weekNum < startWeek) {
+                container.innerHTML = `<div class="rest-day"><h2>Programme starts Week ${startWeek}</h2><p>Your training programme begins on Week ${startWeek}.<br>Current week: ${weekNum}</p></div>`;
+                return;
+            }
+
+            // Sunday — always rest
+            if (dayName === 'sunday') {
+                container.innerHTML = `<div class="rest-day"><h2>🛋️ Complete Rest</h2><p>Recovery is where adaptation happens.<br>Sleep 7–9 hours. You've earned it.</p></div>`;
+                return;
+            }
+
+            // Saturday Race Day (Week 16)
+            if (dayName === 'saturday' && weekNum === 16 && workoutProgram.saturday.race && workoutProgram.saturday.race[16]) {
+                const race = workoutProgram.saturday.race[16];
                 let html = `<div class="workout-card">
                     <div class="workout-title">${race.title}</div>
-                    <div class="workout-subtitle">${race.distance} - ${race.target}</div>
+                    <div class="workout-subtitle">${race.distance} — ${race.target}</div>
                     <div class="pace-info">
                         <div class="pace-title">🎯 Pacing Strategy</div>`;
                 race.strategy.forEach(item => {
@@ -423,43 +435,32 @@
                 return;
             }
 
-            // Sunday rest day (except week 16)
-            if (dayName === 'sunday') {
-                container.innerHTML = `<div class="rest-day"><h2>🛋️ Complete Rest</h2><p>Recovery is where adaptation happens.<br>Sleep 8+ hours. You've earned it.</p></div>`;
-                return;
-            }
-
             let html = '';
 
-            // Monday - Lifting only
+            // Monday — Leg Activation
             if (dayName === 'monday') {
-                const phaseKey = `phase${phase}`;
+                let phaseKey;
+                if (weekNum <= 12) phaseKey = 'phase2';
+                else if (weekNum <= 14) phaseKey = 'phase3';
+                else phaseKey = 'phase3late';
                 const workout = workoutProgram.monday.lifting[phaseKey];
                 html = renderLiftingWorkout(workout);
             }
 
-            // Tuesday - Running only
+            // Tuesday — Easy Run
             if (dayName === 'tuesday') {
                 const run = workoutProgram.tuesday.running[weekNum];
                 html = renderRunningWorkout(run);
             }
 
-            // Wednesday - Lifting (all phases) + Running (phase 2 & 3 only)
+            // Wednesday — Upper Push
             if (dayName === 'wednesday') {
                 const phaseKey = `phase${phase}`;
                 const lifting = workoutProgram.wednesday.lifting[phaseKey];
                 html = renderLiftingWorkout(lifting);
-                
-                // Add running for weeks 9+
-                if (weekNum >= 9) {
-                    const run = workoutProgram.wednesday.running[weekNum];
-                    if (run) {
-                        html += renderRunningWorkout(run, "AM Session");
-                    }
-                }
             }
 
-            // Thursday - Running only
+            // Thursday — Tempo / MP Run
             if (dayName === 'thursday') {
                 const run = workoutProgram.thursday.running[weekNum];
                 if (run) {
@@ -467,19 +468,14 @@
                 }
             }
 
-            // Friday - Lifting + optional running (week 16)
+            // Friday — Upper Pull
             if (dayName === 'friday') {
                 const phaseKey = `phase${phase}`;
                 const lifting = workoutProgram.friday.lifting[phaseKey];
                 html = renderLiftingWorkout(lifting);
-                
-                if (weekNum === 16) {
-                    const run = workoutProgram.friday.running[16];
-                    html += renderRunningWorkout(run, "Evening Session");
-                }
             }
 
-            // Saturday - Running only
+            // Saturday — Long Run
             if (dayName === 'saturday') {
                 const run = workoutProgram.saturday.running[weekNum];
                 if (run) {
