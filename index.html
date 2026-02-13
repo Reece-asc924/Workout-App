@@ -342,228 +342,25 @@
     <div id="workoutContainer"></div>
 
     <script>
-        const programStart = new Date('2025-12-28'); // Week 1 starts tomorrow
+        let programStart;
         let currentDate = new Date();
+        let workoutProgram = null;
 
-        const workoutProgram = {
-            // WEEKS 1-8: BASE BUILDING (3 runs/week)
-            phases: {
-                1: { name: "Base Building", weeks: [1,2,3,4,5,6,7,8], runs: 3 },
-                2: { name: "Transition", weeks: [9,10,11,12], runs: 4 },
-                3: { name: "Peak & Taper", weeks: [13,14,15,16], runs: 4 }
-            },
-            
-            monday: {
-                lifting: {
-                    phase1: {
-                        title: "Running-Specific Legs",
-                        subtitle: "Base Building Phase",
-                        exercises: [
-                            { name: "Bulgarian Split Squats", sets: "3×10 each", rest: "90 sec", notes: "Control eccentric" },
-                            { name: "Romanian Deadlifts", sets: "3×10-12", rest: "90 sec", notes: "Hamstring focus" },
-                            { name: "Walking Lunges", sets: "3×12 each", rest: "90 sec", notes: "" },
-                            { name: "Single-Leg Glute Bridge", sets: "3×12 each", rest: "60 sec", notes: "Hold top 2 sec" },
-                            { name: "Calf Raises (Straight)", sets: "3×15", rest: "60 sec", notes: "Full ROM" },
-                            { name: "Calf Raises (Bent)", sets: "3×15", rest: "60 sec", notes: "Soleus focus" },
-                            { name: "Copenhagen Plank", sets: "3×20 sec each", rest: "60 sec", notes: "Adductor strength" }
-                        ]
-                    },
-                    phase2: {
-                        title: "Running Legs (Maintenance)",
-                        subtitle: "Transition Phase - Reduced Volume",
-                        exercises: [
-                            { name: "Bulgarian Split Squats", sets: "3×8 each", rest: "90 sec", notes: "" },
-                            { name: "Romanian Deadlifts", sets: "3×8-10", rest: "90 sec", notes: "" },
-                            { name: "Single-Leg Glute Bridge", sets: "3×10 each", rest: "60 sec", notes: "" },
-                            { name: "Calf Raises", sets: "3×12", rest: "60 sec", notes: "" },
-                            { name: "Copenhagen Plank", sets: "2×20 sec each", rest: "60 sec", notes: "" }
-                        ]
-                    },
-                    phase3: {
-                        title: "Legs (Minimal)",
-                        subtitle: "Peak & Taper - Maintenance Only",
-                        exercises: [
-                            { name: "Bulgarian Split Squats", sets: "2×8 each", rest: "90 sec", notes: "" },
-                            { name: "Single-Leg Glute Bridge", sets: "2×10 each", rest: "60 sec", notes: "" },
-                            { name: "Calf Raises", sets: "2×12", rest: "60 sec", notes: "" }
-                        ]
-                    }
+        async function fetchWorkoutProgram() {
+            try {
+                const response = await fetch('workout-program.json');
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch workout program: ${response.status}`);
                 }
-            },
-            
-            tuesday: {
-                running: {
-                    1: { distance: "4 miles", session: "Easy Run", pace: "Record your pace", notes: "Week 1: Record all paces for calibration" },
-                    2: { distance: "4 miles", session: "Easy Run", pace: "9:15-9:45/mile", notes: "" },
-                    3: { distance: "5 miles", session: "Easy Run", pace: "9:15-9:45/mile", notes: "" },
-                    4: { distance: "5 miles", session: "Easy Run", pace: "9:15-9:45/mile", notes: "" },
-                    5: { distance: "5 miles", session: "Easy Run", pace: "9:15-9:45/mile", notes: "" },
-                    6: { distance: "5 miles", session: "Easy Run", pace: "9:15-9:45/mile", notes: "" },
-                    7: { distance: "5 miles", session: "Easy Run", pace: "9:15-9:45/mile", notes: "" },
-                    8: { distance: "5 miles", session: "Easy Run", pace: "9:15-9:45/mile", notes: "" },
-                    9: { distance: "6 miles", session: "Intervals: 5×1000m @ 10K pace", pace: "7:45-8:00 intervals", notes: "4-day running begins" },
-                    10: { distance: "8 miles", session: "MP Run: 1.5mi warm + 5mi @ MP + 1.5mi cool", pace: "8:00/mile for 5 miles", notes: "First sustained marathon pace" },
-                    11: { distance: "7 miles", session: "Intervals: 6×1000m @ 10K pace", pace: "7:45-8:00 intervals", notes: "" },
-                    12: { distance: "9 miles", session: "MP Run: 1.5mi warm + 6mi @ MP + 1.5mi cool", pace: "8:00/mile for 6 miles", notes: "" },
-                    13: { distance: "9 miles", session: "MP Run: 1.5mi warm + 6mi @ MP + 1.5mi cool", pace: "8:00/mile for 6 miles", notes: "Race dress rehearsal" },
-                    14: { distance: "6 miles", session: "MP Run: 1mi warm + 4mi @ MP + 1mi cool", pace: "8:00/mile for 4 miles", notes: "Taper begins" },
-                    15: { distance: "5 miles", session: "MP Run: 1mi warm + 3mi @ MP + 1mi cool", pace: "8:00/mile for 3 miles", notes: "Sharp reduction" },
-                    16: { distance: "3 miles", session: "Easy Shakeout", pace: "9:15-9:45", notes: "Race week - Monday shakeout" }
-                }
-            },
-            
-            wednesday: {
-                lifting: {
-                    phase1: {
-                        title: "Upper Push + Abs",
-                        subtitle: "Base Building Phase",
-                        exercises: [
-                            { name: "Bench Press", sets: "4×6-8", rest: "2-3 min", notes: "RPE 8" },
-                            { name: "Incline DB Press", sets: "3×8-10", rest: "90 sec", notes: "" },
-                            { name: "Seated OHP", sets: "3×8-10", rest: "90 sec", notes: "" },
-                            { name: "Cable Flyes", sets: "3×10-12", rest: "60 sec", notes: "" },
-                            { name: "Lateral Raises", sets: "4×12-15", rest: "60 sec", notes: "" },
-                            { name: "Tricep Dips", sets: "3×8-10", rest: "90 sec", notes: "Weighted if needed" },
-                            { name: "Cable Crunches", sets: "3×12-15", rest: "60 sec", notes: "" },
-                            { name: "Hanging Leg Raises", sets: "3×10-12", rest: "60 sec", notes: "" }
-                        ]
-                    },
-                    phase2: {
-                        title: "Upper Push + Abs",
-                        subtitle: "Transition Phase - Strength Focus",
-                        exercises: [
-                            { name: "Bench Press", sets: "3×6-8", rest: "2-3 min", notes: "RPE 8" },
-                            { name: "Incline DB Press", sets: "3×8-10", rest: "90 sec", notes: "" },
-                            { name: "Standing OHP", sets: "3×8-10", rest: "90 sec", notes: "" },
-                            { name: "Lateral Raises", sets: "3×12-15", rest: "60 sec", notes: "" },
-                            { name: "Tricep Dips", sets: "3×8-10", rest: "90 sec", notes: "" },
-                            { name: "Cable Crunches", sets: "3×12-15", rest: "60 sec", notes: "" }
-                        ]
-                    },
-                    phase3: {
-                        title: "Upper Push (Minimal)",
-                        subtitle: "Peak & Taper - Maintenance Only",
-                        exercises: [
-                            { name: "Bench Press", sets: "2×6-8", rest: "2-3 min", notes: "RPE 7" },
-                            { name: "DB Shoulder Press", sets: "2×8-10", rest: "90 sec", notes: "" },
-                            { name: "Lateral Raises", sets: "2×12-15", rest: "60 sec", notes: "" },
-                            { name: "Plank", sets: "2×45 sec", rest: "60 sec", notes: "" }
-                        ]
-                    }
-                },
-                running: {
-                    9: { distance: "4 miles", session: "Recovery Run", pace: "9:45+", notes: "Wednesday recovery - truly easy" },
-                    10: { distance: "4 miles", session: "Recovery Run", pace: "9:45+", notes: "" },
-                    11: { distance: "4 miles", session: "Recovery Run", pace: "9:45+", notes: "" },
-                    12: { distance: "4 miles", session: "Recovery Run", pace: "9:45+", notes: "" },
-                    13: { distance: "4 miles", session: "Recovery Run", pace: "9:45+", notes: "" },
-                    14: { distance: "3 miles", session: "Recovery Run", pace: "9:45+", notes: "" },
-                    15: null,
-                    16: { distance: "3 miles", session: "Easy + Strides", pace: "Easy with 4 strides", notes: "Race week - Wednesday" }
-                }
-            },
-            
-            thursday: {
-                running: {
-                    1: { distance: "4 miles", session: "Tempo: 1mi warm + 2mi @ LT + 1mi cool", pace: "Record tempo pace", notes: "" },
-                    2: { distance: "4.5 miles", session: "Tempo: 1mi warm + 2.5mi @ LT + 1mi cool", pace: "8:00-8:15 tempo", notes: "" },
-                    3: { distance: "5 miles", session: "Tempo: 1mi warm + 3mi @ LT + 1mi cool", pace: "8:00-8:15 tempo", notes: "" },
-                    4: { distance: "5 miles", session: "Tempo: 1mi warm + 3mi @ LT + 1mi cool", pace: "8:00-8:15 tempo", notes: "" },
-                    5: { distance: "5.5 miles", session: "Tempo: 1mi warm + 3.5mi @ LT + 1mi cool", pace: "8:00-8:15 tempo", notes: "" },
-                    6: { distance: "6 miles", session: "Tempo: 1mi warm + 4mi @ LT + 1mi cool", pace: "8:00-8:15 tempo", notes: "Tempo work extending" },
-                    7: { distance: "6 miles", session: "Tempo: 1mi warm + 4mi @ LT + 1mi cool", pace: "8:00-8:15 tempo", notes: "" },
-                    8: { distance: "6.5 miles", session: "Tempo: 1mi warm + 4.5mi @ LT + 1mi cool", pace: "8:00-8:15 tempo", notes: "" },
-                    9: { distance: "6 miles", session: "Tempo: 1mi warm + 4mi @ LT + 1mi cool", pace: "8:00-8:15 tempo", notes: "" },
-                    10: { distance: "6 miles", session: "Tempo: 1mi warm + 4mi @ LT + 1mi cool", pace: "8:00-8:15 tempo", notes: "" },
-                    11: { distance: "6.5 miles", session: "Tempo: 1mi warm + 4.5mi @ LT + 1mi cool", pace: "8:00-8:15 tempo", notes: "" },
-                    12: { distance: "7 miles", session: "Tempo: 1mi warm + 5mi @ LT + 1mi cool", pace: "8:00-8:15 tempo", notes: "" },
-                    13: { distance: "5 miles", session: "Tempo: 1mi warm + 3mi @ LT + 1mi cool", pace: "8:00-8:15 tempo", notes: "" },
-                    14: { distance: "4 miles + 4×100m", session: "Easy Run + Strides", pace: "9:15-9:45 + strides", notes: "" },
-                    15: { distance: "4 miles + 4×100m", session: "Easy Run + Strides", pace: "9:15-9:45 + strides", notes: "Engine tuned" },
-                    16: null
-                }
-            },
-            
-            friday: {
-                lifting: {
-                    phase1: {
-                        title: "Upper Pull",
-                        subtitle: "Base Building Phase",
-                        exercises: [
-                            { name: "Weighted Pull-ups", sets: "4×6-8", rest: "2-3 min", notes: "Add weight" },
-                            { name: "Barbell Rows", sets: "4×8-10", rest: "2 min", notes: "RPE 8" },
-                            { name: "Seated Cable Row", sets: "3×10-12", rest: "90 sec", notes: "" },
-                            { name: "Face Pulls", sets: "3×15-20", rest: "60 sec", notes: "" },
-                            { name: "Rear Delt Flyes", sets: "3×12-15", rest: "60 sec", notes: "" },
-                            { name: "Barbell Curls", sets: "3×8-10", rest: "60 sec", notes: "" },
-                            { name: "Hammer Curls", sets: "3×10-12", rest: "60 sec", notes: "" }
-                        ]
-                    },
-                    phase2: {
-                        title: "Upper Pull",
-                        subtitle: "Transition Phase - Strength Focus",
-                        exercises: [
-                            { name: "Weighted Pull-ups", sets: "3×6-8", rest: "2-3 min", notes: "" },
-                            { name: "Barbell Rows", sets: "3×8-10", rest: "2 min", notes: "" },
-                            { name: "Face Pulls", sets: "3×15-20", rest: "60 sec", notes: "" },
-                            { name: "Barbell Curls", sets: "3×8-10", rest: "60 sec", notes: "" },
-                            { name: "Hammer Curls", sets: "2×10-12", rest: "60 sec", notes: "" }
-                        ]
-                    },
-                    phase3: {
-                        title: "Upper Pull (Minimal)",
-                        subtitle: "Peak & Taper - Maintenance Only",
-                        exercises: [
-                            { name: "Weighted Pull-ups", sets: "2×6-8", rest: "2-3 min", notes: "" },
-                            { name: "Barbell Rows", sets: "2×8-10", rest: "2 min", notes: "" },
-                            { name: "Face Pulls", sets: "2×15-20", rest: "60 sec", notes: "" }
-                        ]
-                    }
-                },
-                running: {
-                    16: { distance: "2 miles", session: "Shakeout", pace: "Easy", notes: "Race week - Friday shakeout" }
-                }
-            },
-            
-            saturday: {
-                running: {
-                    1: { distance: "8 miles", session: "Long Run", pace: "Record your pace", notes: "" },
-                    2: { distance: "9 miles", session: "Long Run", pace: "9:00-9:30", notes: "" },
-                    3: { distance: "9 miles", session: "Long Run", pace: "9:00-9:30", notes: "" },
-                    4: { distance: "10 miles", session: "Long Run", pace: "9:00-9:30", notes: "First double-digit long run" },
-                    5: { distance: "10 miles", session: "Long Run", pace: "9:00-9:30", notes: "Consolidation week" },
-                    6: { distance: "11 miles", session: "Long Run", pace: "9:00-9:25", notes: "" },
-                    7: { distance: "12 miles", session: "Long Run", pace: "9:00-9:20", notes: "" },
-                    8: { distance: "13 miles", session: "Long Run w/ MP: 10 easy + 3 @ MP", pace: "8:00 last 3 miles", notes: "Phase 1 peak - first taste of MP" },
-                    9: { distance: "13 miles", session: "Long Run", pace: "9:00-9:20", notes: "" },
-                    10: { distance: "14 miles", session: "Long Run", pace: "9:00-9:20", notes: "" },
-                    11: { distance: "15 miles", session: "Long Run w/ MP: 11 easy + 4 @ MP", pace: "8:00 last 4 miles", notes: "Big week - tests race fitness" },
-                    12: { distance: "16 miles", session: "Long Run w/ MP: 12 easy + 4 @ MP", pace: "8:00 last 4 miles", notes: "Peak week" },
-                    13: { distance: "14 miles", session: "Long Run", pace: "9:00-9:15", notes: "" },
-                    14: { distance: "10 miles", session: "Long Run", pace: "9:00-9:20", notes: "" },
-                    15: { distance: "7 miles", session: "Easy Long Run", pace: "9:00-9:30", notes: "" },
-                    16: null
-                }
-            },
-            
-            sunday: {
-                rest: true,
-                race: {
-                    16: { 
-                        title: "🏁 RACE DAY",
-                        distance: "26.2 miles",
-                        target: "Sub-3:30 (8:00/mile average)",
-                        notes: "Trust the training. Execute the plan.",
-                        strategy: [
-                            "Miles 1-6: 8:05-8:10/mile - Bank nothing, resist adrenaline",
-                            "Miles 7-13: 8:00/mile - Settle into rhythm",
-                            "Miles 14-20: 8:00/mile - The race starts here",
-                            "Miles 21-26.2: 7:55-8:00/mile - Push the final 5K"
-                        ]
-                    }
-                }
+                const data = await response.json();
+                programStart = new Date(data.programStart);
+                workoutProgram = data;
+                renderWorkout();
+            } catch (error) {
+                document.getElementById('workoutContainer').innerHTML =
+                    `<div class="rest-day"><h2>Error</h2><p>Could not load workout program.<br>${error.message}</p></div>`;
             }
-        };
+        }
 
         function calculateWeekNumber(date) {
             const diffTime = date - programStart;
@@ -593,6 +390,7 @@
         }
 
         function renderWorkout() {
+            if (!workoutProgram) return;
             const dayName = getDayName(currentDate);
             const weekNum = calculateWeekNumber(currentDate);
             const phase = getPhase(weekNum);
@@ -751,7 +549,7 @@
             }
         }, { passive: false });
 
-        renderWorkout();
+        fetchWorkoutProgram();
     </script>
 </body>
 </html>
