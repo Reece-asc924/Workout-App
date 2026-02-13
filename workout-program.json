@@ -1,0 +1,173 @@
+{
+  "programStart": "2025-12-28",
+  "startWeek": 8,
+  "phases": {
+    "2": { "name": "Transition", "weeks": [8,9,10,11,12], "runs": 3 },
+    "3": { "name": "Peak & Taper", "weeks": [13,14,15,16], "runs": 3 }
+  },
+  "paceZones": {
+    "easy": "9:00\u20139:30/mi",
+    "longRun": "8:45\u20139:15/mi",
+    "longRunMP": "8:00\u20138:10/mi",
+    "marathonPace": "7:55\u20138:05/mi",
+    "tempo": "7:20\u20137:35/mi",
+    "threshold": "7:10\u20137:25/mi",
+    "vo2max": "6:45\u20137:00/mi",
+    "strides": "6:15\u20136:30/mi"
+  },
+  "keyRules": [
+    "Legs: If you feel residual fatigue on a run day, skip Monday activation \u2014 running always takes priority",
+    "Upper body: Hit the top of the rep range with good form on all sets \u2192 add 5lb next session",
+    "Easy runs: If you can\u2019t hold a conversation, slow down immediately",
+    "Fuelling: Practice race nutrition on every long run \u2014 45\u201360g carbs per hour",
+    "Last gym session: Complete by mid-Week 15, nothing after that",
+    "Sleep: 7\u20139 hours minimum \u2014 adaptation happens during recovery, not the workout"
+  ],
+  "monday": {
+    "lifting": {
+      "phase2": {
+        "title": "Running-Specific Leg Activation",
+        "subtitle": "Transition Phase \u2014 Unilateral Focus",
+        "exercises": [
+          { "name": "Bulgarian Split Squat", "sets": "3\u00d78/leg", "rest": "90 sec", "notes": "" },
+          { "name": "Single-Leg Romanian Deadlift", "sets": "3\u00d78/leg", "rest": "90 sec", "notes": "" },
+          { "name": "Nordic Hamstring Curl", "sets": "3\u00d76\u20138", "rest": "90 sec", "notes": "" },
+          { "name": "Banded Clamshells", "sets": "2\u00d715/side", "rest": "60 sec", "notes": "" },
+          { "name": "Single-Leg Calf Raise", "sets": "3\u00d712", "rest": "60 sec", "notes": "" },
+          { "name": "Dead Bug", "sets": "3\u00d710/side", "rest": "60 sec", "notes": "" }
+        ]
+      },
+      "phase3": {
+        "title": "Leg Activation (Reduced)",
+        "subtitle": "Peak & Taper \u2014 Weeks 13\u201314",
+        "exercises": [
+          { "name": "Bulgarian Split Squat", "sets": "2\u00d76/leg", "rest": "90 sec", "notes": "" },
+          { "name": "Single-Leg RDL", "sets": "2\u00d76/leg", "rest": "90 sec", "notes": "" },
+          { "name": "Nordic Hamstring Curl", "sets": "2\u00d76\u20138", "rest": "90 sec", "notes": "Remove from Week 14 onwards" },
+          { "name": "Banded Clamshells", "sets": "2\u00d712/side", "rest": "60 sec", "notes": "" },
+          { "name": "Single-Leg Calf Raise", "sets": "2\u00d710", "rest": "60 sec", "notes": "" },
+          { "name": "Dead Bug", "sets": "2\u00d78/side", "rest": "60 sec", "notes": "" }
+        ]
+      },
+      "phase3late": {
+        "title": "Leg Activation (Minimal)",
+        "subtitle": "Peak & Taper \u2014 Weeks 15\u201316",
+        "exercises": [
+          { "name": "Bulgarian Split Squat", "sets": "2\u00d76/leg", "rest": "90 sec", "notes": "" },
+          { "name": "Single-Leg RDL", "sets": "1\u00d76/leg", "rest": "90 sec", "notes": "" },
+          { "name": "Banded Clamshells", "sets": "1\u00d712/side", "rest": "60 sec", "notes": "" },
+          { "name": "Single-Leg Calf Raise", "sets": "1\u00d710", "rest": "60 sec", "notes": "" },
+          { "name": "Dead Bug", "sets": "1\u00d78/side", "rest": "60 sec", "notes": "" }
+        ]
+      }
+    }
+  },
+  "tuesday": {
+    "running": {
+      "8": { "distance": "5 miles", "session": "Easy Run", "pace": "9:00\u20139:30/mi", "notes": "" },
+      "9": { "distance": "6 miles", "session": "Easy Run", "pace": "9:00\u20139:30/mi", "notes": "" },
+      "10": { "distance": "6 miles", "session": "Easy Run", "pace": "9:00\u20139:30/mi", "notes": "" },
+      "11": { "distance": "6 miles", "session": "Easy Run", "pace": "9:00\u20139:30/mi", "notes": "" },
+      "12": { "distance": "5 miles", "session": "Easy Run", "pace": "9:00\u20139:30/mi", "notes": "" },
+      "13": { "distance": "4 miles", "session": "Easy Run", "pace": "9:00\u20139:30/mi", "notes": "" },
+      "14": { "distance": "4 miles", "session": "Easy Run", "pace": "9:00\u20139:30/mi", "notes": "" },
+      "15": { "distance": "3 miles", "session": "Easy Run", "pace": "9:00\u20139:30/mi", "notes": "" },
+      "16": { "distance": "3 miles", "session": "Easy Run + 4 Strides", "pace": "9:00\u20139:30/mi + strides @ 6:15\u20136:30", "notes": "Race week" }
+    }
+  },
+  "wednesday": {
+    "lifting": {
+      "phase2": {
+        "title": "Upper Push",
+        "subtitle": "Transition Phase \u2014 New Rotation",
+        "exercises": [
+          { "name": "Weighted Dips", "sets": "4\u00d76\u20138", "rest": "2\u20133 min", "notes": "" },
+          { "name": "Overhead Press (BB or DB)", "sets": "3\u00d76\u20138", "rest": "2 min", "notes": "" },
+          { "name": "Landmine Press", "sets": "3\u00d78\u201310", "rest": "90 sec", "notes": "" },
+          { "name": "Cable Chest Fly (Low to High)", "sets": "3\u00d712\u201315", "rest": "60 sec", "notes": "" },
+          { "name": "Lateral Raises", "sets": "3\u00d712\u201315", "rest": "60 sec", "notes": "" },
+          { "name": "Skull Crushers (EZ Bar)", "sets": "3\u00d710\u201312", "rest": "60 sec", "notes": "" }
+        ]
+      },
+      "phase3": {
+        "title": "Upper Push (Maintenance)",
+        "subtitle": "Peak & Taper \u2014 2 Sets Each",
+        "exercises": [
+          { "name": "Weighted Dips", "sets": "2\u00d76\u20138", "rest": "2\u20133 min", "notes": "" },
+          { "name": "Overhead Press", "sets": "2\u00d76\u20138", "rest": "2 min", "notes": "" },
+          { "name": "Cable Chest Fly", "sets": "2\u00d712\u201315", "rest": "60 sec", "notes": "" },
+          { "name": "Lateral Raises", "sets": "2\u00d712\u201315", "rest": "60 sec", "notes": "" }
+        ]
+      }
+    }
+  },
+  "thursday": {
+    "running": {
+      "8": { "distance": "~4 miles", "session": "Tempo: 1mi easy + 20min tempo + 1mi easy", "pace": "7:20\u20137:35/mi tempo", "notes": "" },
+      "9": { "distance": "~5 miles", "session": "Tempo: 1mi easy + 25min tempo + 1mi easy", "pace": "7:20\u20137:35/mi tempo", "notes": "" },
+      "10": { "distance": "~5.5 miles", "session": "Tempo: 1mi easy + 28min tempo + 1mi easy", "pace": "7:20\u20137:35/mi tempo", "notes": "" },
+      "11": { "distance": "~6.5 miles", "session": "Tempo: 1mi easy + 35min tempo + 1mi easy", "pace": "7:20\u20137:35/mi tempo", "notes": "" },
+      "12": { "distance": "~5 miles", "session": "Tempo: 1mi easy + 25min tempo + 1mi easy", "pace": "7:20\u20137:35/mi tempo", "notes": "" },
+      "13": { "distance": "6 miles", "session": "MP Run: 1mi + 4mi @ MP + 1mi cool", "pace": "7:55\u20138:05/mi for 4 miles", "notes": "" },
+      "14": { "distance": "6 miles", "session": "MP Run: 1mi + 4mi @ MP + 1mi cool", "pace": "7:55\u20138:05/mi for 4 miles", "notes": "" },
+      "15": { "distance": "6 miles", "session": "MP Run: 2mi easy + 3mi @ MP + 1mi", "pace": "7:55\u20138:05/mi for 3 miles", "notes": "" },
+      "16": { "distance": "5 miles", "session": "MP Run: 2mi easy + 2mi @ MP + 1mi", "pace": "7:55\u20138:05/mi for 2 miles", "notes": "Race week" }
+    }
+  },
+  "friday": {
+    "lifting": {
+      "phase2": {
+        "title": "Upper Pull",
+        "subtitle": "Transition Phase \u2014 New Rotation",
+        "exercises": [
+          { "name": "Chest-Supported DB Row", "sets": "4\u00d78\u201310", "rest": "2 min", "notes": "" },
+          { "name": "Lat Pulldown (Wide Grip)", "sets": "3\u00d78\u201310", "rest": "90 sec", "notes": "" },
+          { "name": "Meadows Row (Single-Arm Landmine)", "sets": "3\u00d78\u201310/side", "rest": "90 sec", "notes": "" },
+          { "name": "Face Pulls", "sets": "3\u00d715\u201320", "rest": "60 sec", "notes": "" },
+          { "name": "Incline DB Curl", "sets": "3\u00d710\u201312", "rest": "60 sec", "notes": "" },
+          { "name": "Hammer Curl", "sets": "2\u00d712\u201315", "rest": "60 sec", "notes": "" }
+        ]
+      },
+      "phase3": {
+        "title": "Upper Pull (Maintenance)",
+        "subtitle": "Peak & Taper \u2014 2 Sets Each",
+        "exercises": [
+          { "name": "Chest-Supported DB Row", "sets": "2\u00d78\u201310", "rest": "2 min", "notes": "" },
+          { "name": "Lat Pulldown", "sets": "2\u00d78\u201310", "rest": "90 sec", "notes": "" },
+          { "name": "Face Pulls", "sets": "2\u00d715\u201320", "rest": "60 sec", "notes": "" },
+          { "name": "Incline DB Curl", "sets": "2\u00d710\u201312", "rest": "60 sec", "notes": "" }
+        ]
+      }
+    }
+  },
+  "saturday": {
+    "running": {
+      "8": { "distance": "13 miles", "session": "Long Run", "pace": "8:45\u20139:15/mi", "notes": "All easy" },
+      "9": { "distance": "14 miles", "session": "Long Run", "pace": "8:45\u20139:15/mi", "notes": "All easy" },
+      "10": { "distance": "15 miles", "session": "Long Run w/ MP Finish", "pace": "8:45\u20139:15/mi", "notes": "Final 3mi @ MP (7:55\u20138:05)" },
+      "11": { "distance": "17 miles", "session": "Long Run w/ MP Finish", "pace": "8:45\u20139:15/mi", "notes": "Final 4mi @ MP (7:55\u20138:05)" },
+      "12": { "distance": "13 miles", "session": "Long Run (Cutback)", "pace": "8:45\u20139:15/mi", "notes": "Cutback \u2014 all easy" },
+      "13": { "distance": "18 miles", "session": "Long Run w/ MP Finish", "pace": "8:45\u20139:15/mi", "notes": "PEAK \u2014 Final 4mi @ MP (7:55\u20138:05)" },
+      "14": { "distance": "12 miles", "session": "Long Run (Easy)", "pace": "8:45\u20139:15/mi", "notes": "Taper begins" },
+      "15": { "distance": "8 miles", "session": "Easy Long Run", "pace": "8:45\u20139:15/mi", "notes": "" },
+      "16": null
+    },
+    "race": {
+      "16": {
+        "title": "\ud83c\udfc1 RACE DAY",
+        "distance": "26.2 miles",
+        "target": "Sub-3:30 (8:00/mile average)",
+        "notes": "Trust the training. Execute the plan.",
+        "strategy": [
+          "Miles 1\u20136: 8:05\u20138:10/mi \u2014 Hold back, should feel easy",
+          "Miles 7\u201313: 8:00\u20138:05/mi \u2014 Settle into race pace",
+          "Miles 14\u201320: 7:55\u20138:05/mi \u2014 Stay consistent",
+          "Miles 20\u201326.2: Leave nothing \u2014 Dig in"
+        ]
+      }
+    }
+  },
+  "sunday": {
+    "rest": true
+  }
+}
