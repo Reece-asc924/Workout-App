@@ -24,6 +24,15 @@
     "Sleep: 7\u20139 hours minimum \u2014 adaptation happens during recovery, not the workout"
   ],
   "monday": {
+    "running": {
+      "10": { "distance": "4 miles", "session": "Easy Run + 5 Strides", "pace": "9:00\u20139:30/mi + strides @ 6:15\u20136:30", "notes": "" },
+      "11": { "distance": "4 miles", "session": "Easy Run + 5 Strides", "pace": "9:00\u20139:30/mi + strides @ 6:15\u20136:30", "notes": "" },
+      "12": { "distance": "4 miles", "session": "Easy Run + 6 Strides", "pace": "9:00\u20139:30/mi + strides @ 6:15\u20136:30", "notes": "" },
+      "13": { "distance": "4 miles", "session": "Easy Run + 6 Strides", "pace": "9:00\u20139:30/mi + strides @ 6:15\u20136:30", "notes": "" },
+      "14": { "distance": "3 miles", "session": "Easy Run + 5 Strides", "pace": "9:00\u20139:30/mi + strides @ 6:15\u20136:30", "notes": "Taper begins" },
+      "15": { "distance": "2.5 miles", "session": "Easy Run + 4 Strides", "pace": "9:00\u20139:30/mi + strides @ 6:15\u20136:30", "notes": "" },
+      "16": { "distance": "2 miles", "session": "Shakeout + 4 Strides", "pace": "9:00\u20139:30/mi + strides @ 6:15\u20136:30", "notes": "Race week" }
+    },
     "lifting": {
       "phase2": {
         "title": "Running-Specific Leg Activation",
@@ -68,10 +77,10 @@
       "9": { "distance": "6 miles", "session": "Easy Run", "pace": "9:00\u20139:30/mi", "notes": "" },
       "10": { "distance": "6 miles", "session": "Easy Run", "pace": "9:00\u20139:30/mi", "notes": "" },
       "11": { "distance": "6 miles", "session": "Easy Run", "pace": "9:00\u20139:30/mi", "notes": "" },
-      "12": { "distance": "5 miles", "session": "Easy Run", "pace": "9:00\u20139:30/mi", "notes": "" },
-      "13": { "distance": "4 miles", "session": "Easy Run", "pace": "9:00\u20139:30/mi", "notes": "" },
-      "14": { "distance": "4 miles", "session": "Easy Run", "pace": "9:00\u20139:30/mi", "notes": "" },
-      "15": { "distance": "3 miles", "session": "Easy Run", "pace": "9:00\u20139:30/mi", "notes": "" },
+      "12": { "distance": "6 miles", "session": "Easy Run", "pace": "9:00\u20139:30/mi", "notes": "" },
+      "13": { "distance": "6 miles", "session": "Easy Run", "pace": "9:00\u20139:30/mi", "notes": "" },
+      "14": { "distance": "5 miles", "session": "Easy Run", "pace": "9:00\u20139:30/mi", "notes": "" },
+      "15": { "distance": "4 miles", "session": "Easy Run", "pace": "9:00\u20139:30/mi", "notes": "" },
       "16": { "distance": "3 miles", "session": "Easy Run + 4 Strides", "pace": "9:00\u20139:30/mi + strides @ 6:15\u20136:30", "notes": "Race week" }
     }
   },
@@ -105,13 +114,13 @@
     "running": {
       "8": { "distance": "~4 miles", "session": "Tempo: 1mi easy + 20min tempo + 1mi easy", "pace": "7:20\u20137:35/mi tempo", "notes": "" },
       "9": { "distance": "~5 miles", "session": "Tempo: 1mi easy + 25min tempo + 1mi easy", "pace": "7:20\u20137:35/mi tempo", "notes": "" },
-      "10": { "distance": "~5.5 miles", "session": "Tempo: 1mi easy + 28min tempo + 1mi easy", "pace": "7:20\u20137:35/mi tempo", "notes": "" },
-      "11": { "distance": "~6.5 miles", "session": "Tempo: 1mi easy + 35min tempo + 1mi easy", "pace": "7:20\u20137:35/mi tempo", "notes": "" },
-      "12": { "distance": "~5 miles", "session": "Tempo: 1mi easy + 25min tempo + 1mi easy", "pace": "7:20\u20137:35/mi tempo", "notes": "" },
-      "13": { "distance": "6 miles", "session": "MP Run: 1mi + 4mi @ MP + 1mi cool", "pace": "7:55\u20138:05/mi for 4 miles", "notes": "" },
-      "14": { "distance": "6 miles", "session": "MP Run: 1mi + 4mi @ MP + 1mi cool", "pace": "7:55\u20138:05/mi for 4 miles", "notes": "" },
-      "15": { "distance": "6 miles", "session": "MP Run: 2mi easy + 3mi @ MP + 1mi", "pace": "7:55\u20138:05/mi for 3 miles", "notes": "" },
-      "16": { "distance": "5 miles", "session": "MP Run: 2mi easy + 2mi @ MP + 1mi", "pace": "7:55\u20138:05/mi for 2 miles", "notes": "Race week" }
+      "10": { "distance": "~7 miles", "session": "Intervals: 1mi WU + 4\u00d71mi @ 7:15\u20137:20 (90s jog) + 1mi CD", "pace": "7:15\u20137:20/mi for intervals", "notes": "" },
+      "11": { "distance": "6 miles", "session": "Tempo: 1mi WU + 4mi tempo @ 7:30 + 1mi CD", "pace": "7:30/mi tempo", "notes": "" },
+      "12": { "distance": "~6 miles", "session": "Intervals: 1mi WU + 5\u00d71km @ 7:10\u20137:20 (90s jog) + 1mi CD", "pace": "7:10\u20137:20/mi for intervals", "notes": "" },
+      "13": { "distance": "6 miles", "session": "Tempo: 1mi WU + 4mi tempo @ 7:25 + 1mi CD", "pace": "7:25/mi tempo", "notes": "" },
+      "14": { "distance": "~7 miles", "session": "Intervals: 1mi WU + 4\u00d71mi @ 7:10\u20137:15 (90s jog) + 1mi CD", "pace": "7:10\u20137:15/mi for intervals", "notes": "" },
+      "15": { "distance": "6 miles", "session": "MP Run: 2mi easy + 3mi @ MP + 1mi CD", "pace": "7:55\u20138:05/mi for 3 miles", "notes": "" },
+      "16": { "distance": "5 miles", "session": "MP Run: 2mi easy + 2mi @ MP + 1mi CD", "pace": "7:55\u20138:05/mi for 2 miles", "notes": "Race week" }
     }
   },
   "friday": {
@@ -144,10 +153,10 @@
     "running": {
       "8": { "distance": "13 miles", "session": "Long Run", "pace": "8:45\u20139:15/mi", "notes": "All easy" },
       "9": { "distance": "14 miles", "session": "Long Run", "pace": "8:45\u20139:15/mi", "notes": "All easy" },
-      "10": { "distance": "15 miles", "session": "Long Run w/ MP Finish", "pace": "8:45\u20139:15/mi", "notes": "Final 3mi @ MP (7:55\u20138:05)" },
-      "11": { "distance": "17 miles", "session": "Long Run w/ MP Finish", "pace": "8:45\u20139:15/mi", "notes": "Final 4mi @ MP (7:55\u20138:05)" },
-      "12": { "distance": "13 miles", "session": "Long Run (Cutback)", "pace": "8:45\u20139:15/mi", "notes": "Cutback \u2014 all easy" },
-      "13": { "distance": "18 miles", "session": "Long Run w/ MP Finish", "pace": "8:45\u20139:15/mi", "notes": "PEAK \u2014 Final 4mi @ MP (7:55\u20138:05)" },
+      "10": { "distance": "14 miles", "session": "Long Run", "pace": "8:45\u20139:15/mi", "notes": "All easy" },
+      "11": { "distance": "16 miles", "session": "Long Run w/ MP Finish", "pace": "8:45\u20139:15/mi", "notes": "Last 3mi @ MP (7:55\u20138:05)" },
+      "12": { "distance": "18 miles", "session": "Long Run w/ MP Finish", "pace": "8:45\u20139:15/mi", "notes": "Last 4mi @ MP (7:55\u20138:05)" },
+      "13": { "distance": "20 miles", "session": "Long Run w/ MP Finish", "pace": "8:45\u20139:15/mi", "notes": "PEAK \u2014 Last 4mi @ MP (7:55\u20138:05)" },
       "14": { "distance": "12 miles", "session": "Long Run (Easy)", "pace": "8:45\u20139:15/mi", "notes": "Taper begins" },
       "15": { "distance": "8 miles", "session": "Easy Long Run", "pace": "8:45\u20139:15/mi", "notes": "" },
       "16": null
