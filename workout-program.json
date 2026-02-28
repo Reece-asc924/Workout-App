@@ -25,6 +25,8 @@
   ],
   "monday": {
     "running": {
+      "8": { "distance": "4 miles", "session": "Easy Run", "pace": "9:00\u20139:30/mi", "notes": "" },
+      "9": { "distance": "4 miles", "session": "Easy Run", "pace": "9:00\u20139:30/mi", "notes": "" },
       "10": { "distance": "4 miles", "session": "Easy Run + 5 Strides", "pace": "9:00\u20139:30/mi + strides @ 6:15\u20136:30", "notes": "" },
       "11": { "distance": "4 miles", "session": "Easy Run + 5 Strides", "pace": "9:00\u20139:30/mi + strides @ 6:15\u20136:30", "notes": "" },
       "12": { "distance": "4 miles", "session": "Easy Run + 6 Strides", "pace": "9:00\u20139:30/mi + strides @ 6:15\u20136:30", "notes": "" },
@@ -32,43 +34,6 @@
       "14": { "distance": "3 miles", "session": "Easy Run + 5 Strides", "pace": "9:00\u20139:30/mi + strides @ 6:15\u20136:30", "notes": "Taper begins" },
       "15": { "distance": "2.5 miles", "session": "Easy Run + 4 Strides", "pace": "9:00\u20139:30/mi + strides @ 6:15\u20136:30", "notes": "" },
       "16": { "distance": "2 miles", "session": "Shakeout + 4 Strides", "pace": "9:00\u20139:30/mi + strides @ 6:15\u20136:30", "notes": "Race week" }
-    },
-    "lifting": {
-      "phase2": {
-        "title": "Running-Specific Leg Activation",
-        "subtitle": "Transition Phase \u2014 Unilateral Focus",
-        "exercises": [
-          { "name": "Bulgarian Split Squat", "sets": "3\u00d78/leg", "rest": "90 sec", "notes": "" },
-          { "name": "Single-Leg Romanian Deadlift", "sets": "3\u00d78/leg", "rest": "90 sec", "notes": "" },
-          { "name": "Nordic Hamstring Curl", "sets": "3\u00d76\u20138", "rest": "90 sec", "notes": "" },
-          { "name": "Banded Clamshells", "sets": "2\u00d715/side", "rest": "60 sec", "notes": "" },
-          { "name": "Single-Leg Calf Raise", "sets": "3\u00d712", "rest": "60 sec", "notes": "" },
-          { "name": "Dead Bug", "sets": "3\u00d710/side", "rest": "60 sec", "notes": "" }
-        ]
-      },
-      "phase3": {
-        "title": "Leg Activation (Reduced)",
-        "subtitle": "Peak & Taper \u2014 Weeks 13\u201314",
-        "exercises": [
-          { "name": "Bulgarian Split Squat", "sets": "2\u00d76/leg", "rest": "90 sec", "notes": "" },
-          { "name": "Single-Leg RDL", "sets": "2\u00d76/leg", "rest": "90 sec", "notes": "" },
-          { "name": "Nordic Hamstring Curl", "sets": "2\u00d76\u20138", "rest": "90 sec", "notes": "Remove from Week 14 onwards" },
-          { "name": "Banded Clamshells", "sets": "2\u00d712/side", "rest": "60 sec", "notes": "" },
-          { "name": "Single-Leg Calf Raise", "sets": "2\u00d710", "rest": "60 sec", "notes": "" },
-          { "name": "Dead Bug", "sets": "2\u00d78/side", "rest": "60 sec", "notes": "" }
-        ]
-      },
-      "phase3late": {
-        "title": "Leg Activation (Minimal)",
-        "subtitle": "Peak & Taper \u2014 Weeks 15\u201316",
-        "exercises": [
-          { "name": "Bulgarian Split Squat", "sets": "2\u00d76/leg", "rest": "90 sec", "notes": "" },
-          { "name": "Single-Leg RDL", "sets": "1\u00d76/leg", "rest": "90 sec", "notes": "" },
-          { "name": "Banded Clamshells", "sets": "1\u00d712/side", "rest": "60 sec", "notes": "" },
-          { "name": "Single-Leg Calf Raise", "sets": "1\u00d710", "rest": "60 sec", "notes": "" },
-          { "name": "Dead Bug", "sets": "1\u00d78/side", "rest": "60 sec", "notes": "" }
-        ]
-      }
     }
   },
   "tuesday": {
