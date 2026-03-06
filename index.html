@@ -538,14 +538,10 @@
 
             let html = '';
 
-            // Monday — Leg Activation
+            // Monday — Easy Run
             if (dayName === 'monday') {
-                let phaseKey;
-                if (weekNum <= 12) phaseKey = 'phase2';
-                else if (weekNum <= 14) phaseKey = 'phase3';
-                else phaseKey = 'phase3late';
-                const workout = workoutProgram.monday.lifting[phaseKey];
-                html = renderLiftingWorkout(workout);
+                const run = workoutProgram.monday.running[weekNum];
+                html = renderRunningWorkout(run);
             }
 
             // Tuesday — Easy Run
